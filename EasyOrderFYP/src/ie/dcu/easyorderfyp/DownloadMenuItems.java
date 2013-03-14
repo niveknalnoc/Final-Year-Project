@@ -18,6 +18,9 @@ import android.widget.SimpleAdapter;
  
 public class DownloadMenuItems extends ListActivity {
  
+	// Object MenuItem
+    MenuItem m;
+	
     // Progress Dialog
     private ProgressDialog pDialog;
  
@@ -25,6 +28,7 @@ public class DownloadMenuItems extends ListActivity {
     JSONParser jParser = new JSONParser();
  
     ArrayList<HashMap<String, String>> itemsList;
+    ArrayList<MenuItem> downloadedMenuItems;
  
     // url to get all products list
     private static String url_all_items = "http://192.168.1.12/easyorder/EASYORDER_SERVER_PHP/get_items.php";
@@ -47,7 +51,8 @@ public class DownloadMenuItems extends ListActivity {
  
         // Hashmap for ListView
         itemsList = new ArrayList<HashMap<String, String>>();
- 
+        downloadedMenuItems = new ArrayList<MenuItem>();
+        
         // Loading products in Background Thread
         new LoadAllItems().execute();
  
@@ -81,6 +86,7 @@ public class DownloadMenuItems extends ListActivity {
         protected String doInBackground(String... args) {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+            
             // getting JSON string from URL
             JSONObject json = jParser.makeHttpRequest(url_all_items, "GET", params);
  
@@ -103,20 +109,39 @@ public class DownloadMenuItems extends ListActivity {
                         // Storing each json item in variable
                         String id = c.getString(TAG_ID);
                         String name = c.getString(TAG_ITEM_NAME);
-                        String price = c.getString(TAG_PRICE);
-                        String available = c.getString(TAG_AVAILABLE);
+                        Double price = c.getDouble(TAG_PRICE);
+                        int available = c.getInt(TAG_AVAILABLE);
  
+                        // ******* NOT REQUIRED IN LIVE APP - DEBUGGING FEATURE *******
                         // creating new HashMap
                         HashMap<String, String> map = new HashMap<String, String>();
- 
+
+                        // ******* NOT REQUIRED IN LIVE APP - DEBUGGING FEATURE *******
+                        // set each items data to m -> MenuItem object
+                        //m.setId(id);
+                        //m.setItemName(name);
+                        //m.setPrice(price);
+                        //m.setAvailable(available);
+                        
+                        // add the items data to the MenuItem object and store in ArrayList<MenuItem> downloadedMenuItems
+                        //downloadedMenuItems.add(m);
+                        downloadedMenuItems.clear();
+                        downloadedMenuItems.add(new MenuItem(id,name,price,available));
+                        
+                        // ******* NOT REQUIRED IN LIVE APP - DEBUGGING FEATURE *******
+                        for(int j = 0 ; j < downloadedMenuItems.size() ; j++) {
+                        	System.out.println("TEST : --> .. --> " + downloadedMenuItems.get(j).getAvailable());
+                        }
+                        
+                        
+                        // ******* NOT REQUIRED IN LIVE APP - DEBUGGING FEATURE *******
                         // adding each child node to HashMap key => value
                         map.put(TAG_ID, id);
                         map.put(TAG_ITEM_NAME, name);
-                        map.put(TAG_PRICE, price);
-                        map.put(TAG_AVAILABLE, available);
  
                         // adding HashList to ArrayList
                         itemsList.add(map);
+                        
                     }
                 } else {
                     // no menu items found
@@ -143,8 +168,8 @@ public class DownloadMenuItems extends ListActivity {
                     ListAdapter adapter = new SimpleAdapter(
                             DownloadMenuItems.this, itemsList,
                             R.layout.list_items, new String[] { TAG_ID,
-                                    TAG_ITEM_NAME, TAG_PRICE, TAG_AVAILABLE},
-                            new int[] { R.id.id, R.id.item_name , R.id.price, R.id.available});
+                                    TAG_ITEM_NAME},
+                            new int[] { R.id.id, R.id.item_name});
                     // updating listview
                     setListAdapter(adapter);
                 }
