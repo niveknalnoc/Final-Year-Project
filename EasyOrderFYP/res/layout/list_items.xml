@@ -4,41 +4,40 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
  
-    <!-- Product id (pid) -->
+    <!-- Item id -->
     <TextView
         android:id="@+id/id"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
- 
+        android:paddingTop="3dip"
+        android:paddingLeft="3dip"
+        android:textSize="14dip" />
+    
     <!-- Name Label -->
     <TextView
         android:id="@+id/item_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dip"
-        android:paddingLeft="6dip"
-        android:textSize="17dip"
-        android:textStyle="bold" />
+        android:paddingTop="3dip"
+        android:paddingLeft="3dip"
+        android:textSize="17dip" />
     
     <!-- Price Label -->
     <TextView
         android:id="@+id/price"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dip"
-        android:paddingLeft="6dip"
-        android:textSize="17dip"
-        android:textStyle="bold" />
+        android:paddingTop="3dip"
+        android:paddingLeft="3dip"
+        android:textSize="17dip" />
     
     <!-- Available Label -->
     <TextView
         android:id="@+id/available"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="6dip"
-        android:paddingLeft="6dip"
-        android:textSize="17dip"
-        android:textStyle="bold" />
+        android:paddingTop="3dip"
+        android:paddingLeft="3dip"
+        android:textSize="17dip" />
  
 </LinearLayout>

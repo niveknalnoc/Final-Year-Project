@@ -15,4 +15,15 @@
         android:text="View Products"
         android:layout_marginTop="25dip"/>
 
+    <!--  Button to view all products screen -->
+
+    <Button
+        android:id="@+id/btnScanItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="98dp"
+        android:text="Scan Items" />
+    
 </RelativeLayout>

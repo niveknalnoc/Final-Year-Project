@@ -98,11 +98,11 @@ public class DownloadMenuItems extends ListActivity {
                 int success = json.getInt(TAG_SUCCESS);
  
                 if (success == 1) {
-                    // products found
-                    // Getting Array of Products
+                    // items found
+                    // Getting Array of items
                     items = json.getJSONArray(TAG_PRODUCTS);
  
-                    // looping through All Products
+                    // looping through All items
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject c = items.getJSONObject(i);
  
