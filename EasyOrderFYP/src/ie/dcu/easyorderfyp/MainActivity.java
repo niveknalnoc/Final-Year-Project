@@ -81,18 +81,19 @@ public class MainActivity extends Activity {
 		activityResultIntent =
 				IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 		
-		String code = activityResultIntent.getContents();
-		id_scanned = code.substring(0, 2);
-		name_scanned = code.substring(3, 18);
-		price_scanned = code.substring(19,24);
-		available_scanned = code.substring(25,26);
+		if (resultCode != RESULT_CANCELED) {
+			String code = activityResultIntent.getContents();
+			id_scanned = code.substring(0, 2);
+			name_scanned = code.substring(3, 18);
+			price_scanned = code.substring(19,24);
+			available_scanned = code.substring(25,26);
 		
-		// submit order to server
-		new CreateNewOrder().execute();
+			// submit order to server
+			new CreateNewOrder().execute();
 
-		// DEBUG - NOT REQUIRED IN LIVE APP
-		System.out.println("TEST : --> .. --> :"+ id_scanned +" - " + name_scanned + " - " + price_scanned + " - " + available_scanned);
-		
+			// DEBUG - NOT REQUIRED IN LIVE APP
+			System.out.println("TEST : --> .. --> :"+ id_scanned +" - " + name_scanned + " - " + price_scanned + " - " + available_scanned);
+		}
 	}
 	
 	/**
@@ -107,7 +108,8 @@ public class MainActivity extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Creating Product..");
+            pDialog.setTitle("Submitting Order.. ");
+            pDialog.setMessage("Sending order to the bar..");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();

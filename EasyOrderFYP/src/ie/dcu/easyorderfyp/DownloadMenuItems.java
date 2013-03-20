@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
  
 public class DownloadMenuItems extends ListActivity {
@@ -56,9 +55,6 @@ public class DownloadMenuItems extends ListActivity {
         // Loading products in Background Thread
         new LoadAllItems().execute();
  
-        // Get listview
-        ListView lv = getListView();
- 
     }
  
  
@@ -74,7 +70,8 @@ public class DownloadMenuItems extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(DownloadMenuItems.this);
-            pDialog.setMessage("Loading Menu Items. Please wait...");
+            pDialog.setTitle("Grabbing the Menu! ");
+            pDialog.setMessage("Loading Menu Items...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();

@@ -12,7 +12,7 @@
     <Button android:id="@+id/btnViewProducts"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="View Products"
+        android:text="@string/view_products"
         android:layout_marginTop="25dip"/>
 
     <!--  Button to view all products screen -->
@@ -24,6 +24,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="98dp"
-        android:text="Scan Items" />
+        android:text="@string/scan_items" />
     
 </RelativeLayout>
