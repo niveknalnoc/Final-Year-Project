@@ -30,7 +30,7 @@ public class DownloadMenuItems extends ListActivity {
     ArrayList<MenuItem> downloadedMenuItems;
  
     // url to get all products list
-    private static String url_all_items = "http://192.168.1.12/easyorder/EASYORDER_SERVER_PHP/get_items.php";
+    private static String url_all_items = "http://192.168.1.12/easyorder_server/get_items.php";
  
     // JSON Node names
     private static final String TAG_SUCCESS = "success";

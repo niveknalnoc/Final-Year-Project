@@ -9,21 +9,46 @@
     tools:context=".MainActivity" >
 
     <!--  Button to view all products screen -->
-    <Button android:id="@+id/btnViewProducts"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/view_products"
-        android:layout_marginTop="25dip"/>
 
     <!--  Button to view all products screen -->
+    
+    <!--  Button for eat-in -->
+    
+        <!--  Button for take-away -->
+
+    <Button
+        android:id="@+id/btnEatIn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        android:text="@string/eat_in" />
+
+    <Button
+        android:id="@+id/btnViewProducts"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnTakeAway"
+        android:layout_centerVertical="true"
+        android:text="@string/view_products" />
 
     <Button
         android:id="@+id/btnScanItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="98dp"
+        android:layout_alignLeft="@+id/btnViewProducts"
+        android:layout_below="@+id/btnViewProducts"
+        android:layout_marginTop="43dp"
         android:text="@string/scan_items" />
+
+    <Button
+        android:id="@+id/btnTakeAway"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnEatIn"
+        android:layout_below="@+id/btnEatIn"
+        android:layout_marginTop="36dp"
+        android:text="@string/take_away" />
     
 </RelativeLayout>

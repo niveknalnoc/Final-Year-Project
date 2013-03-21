@@ -8,6 +8,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static ie.dcu.easyorderfyp.Utilities.SENDER_ID;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,23 +22,34 @@ import android.widget.Button;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import com.google.android.gcm.GCMRegistrar;
+
+
 public class MainActivity extends Activity {
 	
 	Button btnViewProducts;
 	Button btnScanItem;
+	Button btnEatIn;
+	Button btnTakeAway;
 	
 	String id_scanned;
 	String name_scanned;
 	String price_scanned;
 	String available_scanned;
 	
+	// alert dialog manager
+	AlertDialogManager alert = new AlertDialogManager();
+	
 	// Progress Dialog
     private ProgressDialog pDialog;
- 
+    
+    // Internet detector
+ 	ConnectionDetector cd;
+    
     JSONParser jsonParser = new JSONParser();
     
- // url to create new product
-    private static String url_submit_order = "http://192.168.1.12/easyorder/EASYORDER_SERVER_PHP/submit_order.php";
+    // url to create new product
+    private static String url_submit_order = "http://192.168.1.12/easyorder_server/submit_order.php";
  
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -48,8 +61,22 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		cd = new ConnectionDetector(getApplicationContext());
+
+		// Check if Internet present
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			alert.showAlertDialog(MainActivity.this,
+					"Internet Connection Error",
+					"Please connect to working Internet connection", false);
+			// stop executing code by return
+			return;
+		}
+		
 		btnViewProducts = (Button) findViewById(R.id.btnViewProducts);
 		btnScanItem = (Button) findViewById(R.id.btnScanItem);
+		btnEatIn = (Button) findViewById(R.id.btnEatIn);
+		btnTakeAway = (Button) findViewById(R.id.btnTakeAway);
 		
 		 // view products click event
         btnViewProducts.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +101,30 @@ public class MainActivity extends Activity {
  
             }
         });
+        
+        // eat in click event
+        btnEatIn.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View view) {
+				Intent i = new Intent(getApplicationContext(), EatInActivity.class);
+                startActivity(i);
+ 
+            }
+        });
+        
+        // Take Away click event
+        btnTakeAway.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View view) {
+                // Launching take away Activity
+            	Intent i = new Intent(getApplicationContext(), TakeAwayActivity.class);
+                startActivity(i);
+ 
+            }
+        });
+        
         
 	}
 
@@ -166,5 +217,5 @@ public class MainActivity extends Activity {
         }
  
     }
-
+    
 }
