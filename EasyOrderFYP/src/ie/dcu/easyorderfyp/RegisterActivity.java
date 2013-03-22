@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
@@ -25,9 +24,6 @@ public class RegisterActivity extends Activity {
 		// Alert dialog manager
 		AlertDialogManager alert = new AlertDialogManager();
 		
-		// Connection detector
-		ConnectionDetector cd;
-		
 		public static String name;
 		public static String user_pin;
 
@@ -35,18 +31,6 @@ public class RegisterActivity extends Activity {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_main);
-			
-			cd = new ConnectionDetector(getApplicationContext());
-
-			// Check if Internet present
-			if (!cd.isConnectingToInternet()) {
-				// Internet Connection is not present
-				alert.showAlertDialog(RegisterActivity.this,
-						"Internet Connection Error",
-						"Please connect to working Internet connection", false);
-				// stop executing code by return
-				return;
-			}
 			
 			// Getting name, user_pin from intent
 			Intent i = getIntent();
@@ -57,8 +41,7 @@ public class RegisterActivity extends Activity {
 			// Make sure the device has the proper dependencies.
 			GCMRegistrar.checkDevice(this);
 
-			// Make sure the manifest was properly set - comment out this line
-			// while developing the app, then uncomment it when it's ready.
+			// Make sure the manifest was properly set
 			GCMRegistrar.checkManifest(this);
 
 			registerReceiver(mHandleMessageReceiver, new IntentFilter(
