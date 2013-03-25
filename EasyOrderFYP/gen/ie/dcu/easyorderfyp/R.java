@@ -26,41 +26,49 @@ public final class R {
         public static final int success=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000d;
-        public static final int available=0x7f08000c;
-        public static final int btnEatIn=0x7f080000;
-        public static final int btnRegister=0x7f080008;
-        public static final int btnScanItem=0x7f080003;
-        public static final int btnTakeAway=0x7f080002;
-        public static final int btnViewProducts=0x7f080001;
-        public static final int id=0x7f080009;
-        public static final int item_name=0x7f08000a;
-        public static final int price=0x7f08000b;
-        public static final int textView1=0x7f080005;
-        public static final int textView2=0x7f080006;
-        public static final int txtName=0x7f080004;
-        public static final int txtPin=0x7f080007;
+        public static final int action_settings=0x7f080012;
+        public static final int available=0x7f080011;
+        public static final int btnEatIn=0x7f080005;
+        public static final int btnRegister=0x7f08000d;
+        public static final int btnScan=0x7f080003;
+        public static final int btnTakeAway=0x7f080006;
+        public static final int id=0x7f08000e;
+        public static final int item_name=0x7f08000f;
+        public static final int linearLayout1=0x7f080002;
+        public static final int price=0x7f080010;
+        public static final int textView1=0x7f08000a;
+        public static final int textView2=0x7f08000b;
+        public static final int txtEatIn=0x7f080000;
+        public static final int txtHeader=0x7f080004;
+        public static final int txtMessage=0x7f080001;
+        public static final int txtName=0x7f080009;
+        public static final int txtPin=0x7f08000c;
+        public static final int txtScanInsructions=0x7f080008;
+        public static final int txtTableNumber=0x7f080007;
     }
     public static final class layout {
         public static final int activity_eat_in=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int activity_take_away=0x7f030002;
-        public static final int all_items=0x7f030003;
-        public static final int list_items=0x7f030004;
+        public static final int activity_scan_items=0x7f030002;
+        public static final int activity_take_away=0x7f030003;
+        public static final int all_items=0x7f030004;
+        public static final int list_items=0x7f030005;
     }
     public static final class menu {
         public static final int download_menu_items=0x7f070000;
         public static final int eat_in=0x7f070001;
         public static final int main=0x7f070002;
-        public static final int take_away=0x7f070003;
+        public static final int scan_items=0x7f070003;
+        public static final int take_away=0x7f070004;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int already_registered=0x7f050009;
         public static final int app_name=0x7f050000;
         public static final int eat_in=0x7f050019;
+        public static final int eat_in_instructions=0x7f050026;
         public static final int error_config=0x7f050008;
-        public static final int full_name=0x7f05001e;
+        public static final int full_name=0x7f05001f;
         public static final int gcm_deleted=0x7f05000f;
         public static final int gcm_error=0x7f05000d;
         public static final int gcm_message=0x7f05000c;
@@ -69,25 +77,33 @@ public final class R {
         public static final int gcm_unregistered=0x7f05000b;
         public static final int hello_world=0x7f050002;
         public static final int menu_settings=0x7f050006;
+        public static final int no_restaurant_header=0x7f050024;
         public static final int options_clear=0x7f050017;
         public static final int options_exit=0x7f050018;
         public static final int options_register=0x7f050015;
         public static final int options_unregister=0x7f050016;
-        public static final int pin=0x7f05001f;
-        public static final int register=0x7f050020;
+        public static final int pin=0x7f050020;
+        public static final int register=0x7f050021;
+        public static final int scan=0x7f050027;
+        public static final int scan_instructions=0x7f050029;
         public static final int scan_items=0x7f050005;
         public static final int server_register_error=0x7f050013;
         public static final int server_registered=0x7f050011;
         public static final int server_registering=0x7f050010;
         public static final int server_unregister_error=0x7f050014;
         public static final int server_unregistered=0x7f050012;
+        public static final int table_number=0x7f050028;
         public static final int take_away=0x7f05001a;
         public static final int title_activity_Register_Activity=0x7f05001d;
         public static final int title_activity_download_menu_items=0x7f050003;
         public static final int title_activity_eat_in=0x7f05001b;
         public static final int title_activity_main=0x7f050007;
+        public static final int title_activity_scan_items=0x7f05001e;
         public static final int title_activity_take_away=0x7f05001c;
         public static final int view_products=0x7f050004;
+        public static final int welcome_header=0x7f050023;
+        public static final int welcome_message=0x7f050022;
+        public static final int welcome_message_main=0x7f050025;
     }
     public static final class style {
         /** 

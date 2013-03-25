@@ -65,27 +65,32 @@
             </intent-filter>
         </receiver>
 
-         <service android:name=".GCMIntentService" />
+        <service android:name="ie.dcu.easyorderfyp.GCMIntentService" />
 
         <activity
             android:name="ie.dcu.easyorderfyp.DownloadMenuItems"
-            android:label="@string/title_activity_download_menu_items"
-            android:configChanges="orientation" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_download_menu_items" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.EatInActivity"
-            android:label="@string/title_activity_eat_in"
-            android:configChanges="orientation" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_eat_in" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.TakeAwayActivity"
-            android:label="@string/title_activity_take_away"
-            android:configChanges="orientation" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_take_away" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.RegisterActivity"
-            android:label="@string/title_activity_Register_Activity"
-            android:configChanges="orientation" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_Register_Activity" >
+        </activity>
+        <activity
+            android:name="ie.dcu.easyorderfyp.ScanItemsActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_scan_items" >
         </activity>
     </application>
 

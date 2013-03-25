@@ -30,9 +30,18 @@
     <string name="take_away">Take Away</string>
     <string name="title_activity_eat_in">EatInActivity</string>
     <string name="title_activity_take_away">TakeAwayActivity</string>
-    <string name="title_activity_Register_Activity">Register Activity</string>
+    <string name="title_activity_Register_Activity">RegisterActivity</string>
+    <string name="title_activity_scan_items">ScanItemsActivity</string>
     <string name="full_name">Full Name</string>
     <string name="pin">Pin</string>
     <string name="register">Register</string>
+    <string name="welcome_message">To start ordering first scan your table locator QR code on the table...</string>
+    <string name="welcome_header">Welcome to EasyOrder</string>
+    <string name="no_restaurant_header">I can\'t find you</string>
+    <string name="welcome_message_main">Please choose an option below to start ordering food!</string>
+    <string name="eat_in_instructions">Please scan your table QR locator code to begin ordering food!</string>
+    <string name="scan">Scan</string>
+    <string name="table_number">Table Number</string>
+    <string name="scan_instructions">To start ordering from the menu start scanning items!</string>
 
 </resources>
