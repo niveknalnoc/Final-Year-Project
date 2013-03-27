@@ -23,7 +23,7 @@ public class ScanItemsActivity extends Activity {
 
 	// arraylist to hold the menu, itemsScaned and the order
 	ArrayList<MenuItem> menu;
-	ArrayList<MenuItem> menuItemsScanned;
+	ArrayList<MenuItem> scannedItems;
 	ArrayList<Order> order;
 	
 	final Activity returnActivity = this;
@@ -41,7 +41,7 @@ public class ScanItemsActivity extends Activity {
 		Bundle b = this.getIntent().getExtras();
 		tableNumber = b.getString("tableNumber");
 		menu = new ArrayList<MenuItem>();
-		menuItemsScanned = new ArrayList<MenuItem>();
+		scannedItems = new ArrayList<MenuItem>();
 		menu = getIntent().getParcelableArrayListExtra ("downloadedMenuItems");
 		
 		TextView tvTableNum = (TextView) findViewById(R.id.txtTableNumber);
@@ -72,12 +72,9 @@ public class ScanItemsActivity extends Activity {
             if (thisResultCode == -1) { 
 	          	codeContents = activityResultIntent.getContents();
 	         	MenuItem item = parseCodeScanned(codeContents);
-	         	
 	         	if(menu.contains(item)) {
 	         		// order matches the menu on the db, add to order arraylist
-	         		menuItemsScanned.add(item);
-	         		for(int i = 0 ; i < menuItemsScanned.size() ; i++)
-	         		System.out.println(menuItemsScanned.get(i).getItemName() + " was added to menuItemsScanned");
+	         		scannedItems.add(item);
 	         	}else{
 	         		//menu does not contain this item, let customer know
 	         		alert.showAlertDialog(this,
@@ -106,40 +103,39 @@ public class ScanItemsActivity extends Activity {
 		
 		int startCount = 0;
 		int endCount = 0;
-		boolean itemId = false;
-		boolean itemName = false;
-		boolean itemPrice = false;
-		boolean itemAvailable = false;
-		String thisId = null;
-		String thisItemName = null;
-		Double thisPrice = null;
-		int thisAvailable = 3;
+		
+		boolean idSet = false;
+		boolean nameSet = false;
+		boolean priceSet = false;
+		
+		String setId = null;
+		String setItemName = null;
+		Double setPrice = null;
+		int setAvailable = 3;
 		String temp;
 		
 		for(int i = 0 ; i < codeContents.length() ; i++) {
 			if(codeContents.charAt(i) == ':'){
+				temp = codeContents.substring(startCount, endCount);
 				endCount++;
-				temp = codeContents.substring(startCount, endCount-1);
 				startCount = endCount;
-				if(itemId != true) {
-					thisId = temp;
-					itemId = true;
-				}else if(itemName != true) {
-					thisItemName = temp;
-					itemName = true;
-				}else if(itemPrice != true) {
-					thisPrice = Double.parseDouble(temp);
-					itemPrice = true;
-				}else if(itemAvailable != true){
-					thisAvailable = Integer.parseInt(temp);
-					itemAvailable = true;
+				if(idSet != true) {
+					setId = temp;
+					idSet = true;
+				}else if(nameSet != true) {
+					setItemName = temp;
+					nameSet = true;
+				}else if(priceSet != true) {
+					setPrice = Double.parseDouble(temp);
+					setAvailable = Integer.parseInt(codeContents.substring(startCount));
+					priceSet = true;
 				}
 			}else{
 				endCount++;
 			}
 		}
-		System.out.println(thisId + " " + thisItemName + " " + thisPrice + " " + thisAvailable);
-		return new MenuItem(thisId, thisItemName, thisPrice, thisAvailable);
+		
+		return new MenuItem(setId, setItemName, setPrice, setAvailable);
 	}
 
 }

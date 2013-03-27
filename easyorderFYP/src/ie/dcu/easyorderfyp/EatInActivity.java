@@ -49,7 +49,9 @@ public class EatInActivity extends Activity {
 	private int thisResultCode;
 	private String codeContents;
 	
-	private boolean error_flag = false;
+	// no_iems_error_flag is set if no items found , return_flag is set to escape activity back to main menu
+	private boolean no_items_error_flag = false;
+	private boolean return_flag = false;
 	
 	final Activity returnActivity = this;
 	
@@ -81,24 +83,27 @@ public class EatInActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		// parse scanned code
-		if (thisRequestCode == 49374) {
-            if (thisResultCode == -1) { 
-            	codeContents = activityResultIntent.getContents();
-            	boolean isValidCodeScanned = validateCodeContents(codeContents);
-            	if(isValidCodeScanned){
-                    downloadedMenuItems = new ArrayList<MenuItem>();
-                    // Loading products in Background Thread
-                    new LoadAllItems().execute();
-            	}
-            	else {
-            		// alert dialog - invalid code scanned
-            		alert.showAlertDialog(this,
-            				"Invalid Locator Code",
-            				"Please scan a valid Locator QR code located on your table!", false);
-            	}
-            }
+		// if user hasn't pressed back button at the scan item screen
+		if(return_flag == false) {
+			// parse scanned code
+			if (thisRequestCode == 49374) {
+				if (thisResultCode == -1) { 
+					codeContents = activityResultIntent.getContents();
+					boolean isValidCodeScanned = validateCodeContents(codeContents);
+					if(isValidCodeScanned){
+						return_flag = true;
+						downloadedMenuItems = new ArrayList<MenuItem>();
+						// Loading products in Background Thread
+						new LoadAllItems().execute();
+					}
+					else {
+						// alert dialog - invalid code scanned
+						alert.showAlertDialog(this,
+								"Invalid Locator Code",
+								"Please scan a valid Locator QR code located on your table!", false);
+					}
+				}
+			}
 		}
 	}
 
@@ -111,18 +116,18 @@ public class EatInActivity extends Activity {
 	}
 	
 	private boolean validateCodeContents(String codeContents) {
-		boolean x = false;
+		boolean validator = false;
 		String firstToken = codeContents.substring(0, 1);
 		// check valid code scanned [char followed by an int]
 		if(firstToken.equals("T") && codeContents.length() > 1) {
 			try{
 				int tableNumber = Integer.parseInt(codeContents.substring(1));
-				x = true;
+				validator = true;
 			}catch(NumberFormatException e){
-				x = false;
+				validator = false;
 			}
 		}
-		return x;
+		return validator;
 	}
 	
     /**
@@ -182,7 +187,7 @@ public class EatInActivity extends Activity {
                     }
                 } else {
                     // no menu items found ** HANDLE ERROR **
-                	error_flag = true;
+                	no_items_error_flag = true;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -200,7 +205,7 @@ public class EatInActivity extends Activity {
             // updating UI from Background Thread
             runOnUiThread(new Runnable() {
                 public void run() {
-                	if(error_flag == true) {
+                	if(no_items_error_flag == true) {
                 		//SEND TO A NEW ACTIVITY STATING ERROR PLEASE CONTACT STAFF - NO MENU IN DATABASE
                 	}else {
                 		Intent scanItemsIntent = new Intent(getApplicationContext(), ScanItemsActivity.class);
