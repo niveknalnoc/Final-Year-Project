@@ -41,7 +41,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name="ie.dcu.easyorderfyp.MainActivity"
+            android:name="ie.dcu.easyorderfyp.SplashScreen"
             android:configChanges="orientation"
             android:label="@string/app_name" >
             <intent-filter>
@@ -91,6 +91,10 @@
             android:name="ie.dcu.easyorderfyp.ScanItemsActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_scan_items" >
+        </activity>
+        <activity
+            android:name="ie.dcu.easyorderfyp.MainActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

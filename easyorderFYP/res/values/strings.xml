@@ -40,8 +40,16 @@
     <string name="no_restaurant_header">I can\'t find you</string>
     <string name="welcome_message_main">Please choose an option below to start ordering food!</string>
     <string name="eat_in_instructions">Please scan your table QR locator code to begin ordering food!</string>
-    <string name="scan">Scan</string>
+    <string name="scan_item">Scan Item</string>
+    <string name="scan_code">Scan Code</string>
     <string name="table_number">Table Number</string>
-    <string name="scan_instructions">To start ordering from the menu start scanning items!</string>
+    <string name="scan_instructions">To start ordering from the menu start scanning items! Your items will appear below!</string>
+    <string name="quantity_dialog_title">How Many?</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="submit_order">Submit Order</string>
+    <string name="order_empty_error">Your order is empty&#8230;</string>
+    <string name="order_empty_desc">You have to choose at least 1 item from the menu before you place an order.</string>
+    <string name="title_scanItems">Scan Items</string>
+    <string name="title_viewItemsScanned">View Items</string>
 
 </resources>

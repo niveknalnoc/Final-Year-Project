@@ -3,13 +3,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true" >
-
+    
     <TextView
         android:id="@+id/txtEatIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="@string/eat_in"
+        android:layout_below="@+id/logo"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 
@@ -31,15 +32,24 @@
         android:paddingBottom="1.0dip"
         android:paddingLeft="4.0dip"
         android:paddingRight="4.0dip"
-        android:paddingTop="50.0dip" >
+        android:paddingTop="20.0dip" >
 
         <Button
             android:id="@+id/btnScan"
             android:layout_width="222dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:text="@string/scan" />
+            android:text="@string/scan_code" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:src="@drawable/easyorder_logo" />
 
 </RelativeLayout>

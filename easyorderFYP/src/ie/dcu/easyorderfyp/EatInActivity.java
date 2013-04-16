@@ -157,9 +157,9 @@ public class EatInActivity extends Activity {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_all_items, "GET", params);
+            JSONObject json = jParser.makeHttpRequest(url_all_items, params);
  
-            // Check your log cat for JSON reponse
+            // Check your log cat for JSON response
             Log.d("All Items: ", json.toString());
  
             try {

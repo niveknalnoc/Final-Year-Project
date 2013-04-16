@@ -33,15 +33,13 @@ public class JSONParser {
     }
  
     // function get json from url
-    // by making HTTP POST or GET mehtod
-    public JSONObject makeHttpRequest(String url, String method,
+    // by making HTTP POST mehtod
+    
+    public JSONObject makeHttpRequest(String url,
             List<NameValuePair> params) {
  
         // Making HTTP request
         try {
- 
-            // check for request method
-            if(method == "POST"){
                 // request method is POST
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -52,18 +50,6 @@ public class JSONParser {
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
  
-            }else if(method == "GET"){
-                // request method is GET
-                DefaultHttpClient httpClient = new DefaultHttpClient();
-                String paramString = URLEncodedUtils.format(params, "utf-8");
-                url += "?" + paramString;
-                HttpGet httpGet = new HttpGet(url);
- 
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
-            }           
- 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -73,15 +59,21 @@ public class JSONParser {
         }
  
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
+        	BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        	
+	        String line = "";
+	        StringBuilder total = new StringBuilder();
+	
+	        // Read response until the end
+	        while ((line = rd.readLine()) != null) {
+	            total.append(line);
+	        }
+	        
+	        // Return full string
+	        //return total.toString();
+        	
             is.close();
-            json = sb.toString();
+            json = total.toString();
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
