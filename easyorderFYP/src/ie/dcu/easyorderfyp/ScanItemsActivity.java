@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import static ie.dcu.easyorderfyp.Utilities.URL_SUBMIT_ORDER;
+
 public class ScanItemsActivity extends Activity {
 	
 	private Button btnScanItems;
@@ -44,15 +46,12 @@ public class ScanItemsActivity extends Activity {
 	// JSON Node names
     private static final String TAG_SUCCESS = "success";
     
-    JSONParser jsonParser = new JSONParser();
+    WebCallService webCall;
     
-    // url to create new product
-    private static String url_submit_order = "http://192.168.1.12/easyorder_server/submit_order.php";
-	
 	private IntentResult activityResultIntent;
 	
 	// alert dialog manager
-	AlertDialogManager alert = new AlertDialogManager();
+	AlertDialogManager alert;
 	
 	// Progress Dialog
     private ProgressDialog pDialog;
@@ -62,11 +61,15 @@ public class ScanItemsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan_item);
 		
+		Log.e("Here", "");
+		webCall = new WebCallService();
+		alert = new AlertDialogManager();
+		scannedItems = new ArrayList<MenuItem>();
+		menu = new ArrayList<MenuItem>();
+		
 		Bundle b = this.getIntent().getExtras();
 		tableNumber = b.getString("tableNumber");
-		menu = new ArrayList<MenuItem>();
-		scannedItems = new ArrayList<MenuItem>();
-		menu = getIntent().getParcelableArrayListExtra ("downloadedMenuItems");
+		menu = getIntent().getParcelableArrayListExtra("downloadedMenuItems");
 		
 		// display table number at the top of the screen
 		tvTableNum = (TextView) findViewById(R.id.txtTableNumber);
@@ -84,7 +87,8 @@ public class ScanItemsActivity extends Activity {
         final Activity returnActivity = this;
         
         btnScanItems = (Button) findViewById(R.id.btnScanItem);
-		// scan table code intent onClick(btnScan)
+		
+        // scan table code intent onClick(btnScan)
 		btnScanItems.setOnClickListener(new View.OnClickListener() {
 
            @Override
@@ -96,14 +100,12 @@ public class ScanItemsActivity extends Activity {
        });
 		
 		 btnSubmitButton = (Button) findViewById(R.id.btnSubmit);
-		 	// scan table code intent onClick(btnScan)
+		 
+		 // scan table code intent onClick(btnScan)
 		 btnSubmitButton.setOnClickListener(new View.OnClickListener() {
 
 		    @Override
 		    public void onClick(View view) {
-		    	// **** NEED A BUTTON FOR SUBMITTING THE ORDER ****
-				// AFTER ORDER SUBMITTED CLEAR THE MENUITEMSSCANNED ARRAYLIST
-				// DISPLAY ORDER SUBMITTED SCREEN - BACK BUTTON BRINGS TO MAIN MENU
 		    	submitOrder();
 		    }
 	   });
@@ -118,22 +120,46 @@ public class ScanItemsActivity extends Activity {
             if (thisResultCode == -1) { 
 	          	codeContents = activityResultIntent.getContents();
 	         	MenuItem item = parseCodeScanned(codeContents);
-	         	if(menu.contains(item)) {
-	         		// order matches the menu on the db, add to order arraylist
-	         		scannedItems.add(item);
-	         		OrderListAdapter adapter = (OrderListAdapter) mOrderListView.getAdapter();
-					adapter.addOrderItem(item);
+	         	boolean isValid = validateInput(item);
+	         	if(isValid){
+	         		if(menu.contains(item)) {
+		         		// order matches the menu on the db, add to order arraylist
+		         		addItemToOrder(item);
+		         	}else{
+		         		//menu does not contain this item, let customer know
+		         		alert.showAlertDialog(this,
+	            				"Invalid Item Code",
+	            				"This Item Is Not Available Today!", false);
+		         	}
 	         	}else{
-	         		//menu does not contain this item, let customer know
 	         		alert.showAlertDialog(this,
             				"Invalid Item Code",
-            				"This Item Is Not Available Today!", false);
+            				"This Item Is Not a Menu Item Code!", false);
 	         	}
-	         	
             }
 		}
 		
 	}
+	
+	/**
+	 * check that the input is a valid menu item
+	 */
+	private boolean validateInput(MenuItem item){
+		if(item.getItemId() == null || item.getItemName() == null || item.getAvailable() == 3 || item.getPrice() == 0.00)
+		return false;
+		else
+		return true;
+	}
+	
+	/**
+	 * add to the order
+	 */
+	private void addItemToOrder(MenuItem item) {
+		OrderListAdapter adapter = (OrderListAdapter) mOrderListView.getAdapter();
+		scannedItems.add(item);
+		adapter.addOrderItem(item);
+	}
+	
 	
 	/**
 	 * Submit the order
@@ -153,6 +179,8 @@ public class ScanItemsActivity extends Activity {
 	 */
 	private void orderSubmitted() {
 		//Bring user to next screen
+		Intent error = new Intent(getApplicationContext(), OrderSubmitted.class);
+		startActivity(error);
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -198,8 +226,10 @@ public class ScanItemsActivity extends Activity {
 				endCount++;
 			}
 		}
-		
-		return new MenuItem(setId, setItemName, setPrice, setAvailable);
+		if(!idSet || !nameSet || !priceSet)
+			return new MenuItem(null, null, 0.00,'3');
+		else
+			return new MenuItem(setId, setItemName, setPrice, setAvailable);
 	}
 	
 	public void newQuantity(int index, int quan) {
@@ -245,7 +275,7 @@ public class ScanItemsActivity extends Activity {
 
 	     	// getting JSON Object
             // Note that create product url accepts POST method
-            JSONObject json = jsonParser.makeHttpRequest(url_submit_order, param);
+            JSONObject json = webCall.makeHttpRequest(URL_SUBMIT_ORDER, param);
  
             // check log cat from response
             Log.d("Create Response", json.toString());
@@ -256,9 +286,7 @@ public class ScanItemsActivity extends Activity {
  
                 if (success == 1) {
                     // successfully submitted order
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
- 
+                	orderSubmitted();
                     // closing this screen
                     finish();
                 } else {

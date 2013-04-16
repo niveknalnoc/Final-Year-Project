@@ -12,8 +12,8 @@ public class MainActivity extends Activity {
 	private Button btnEatIn;
 	private Button btnTakeAway;
 	
-    // alert dialog manager
- 	AlertDialogManager alert = new AlertDialogManager();
+    // Alert dialog manager
+ 	AlertDialogManager alert;
  	
     // Internet detector
  	ConnectionDetector cd;
@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		alert = new AlertDialogManager();
 		cd = new ConnectionDetector(getApplicationContext());
 
 		// Check if Internet present
@@ -30,9 +31,7 @@ public class MainActivity extends Activity {
 			// Internet Connection is not present
 			alert.showAlertDialog(MainActivity.this,
 					"Internet Connection Error",
-					"Please connect to wifi or 3g to use EasyOrder", false);
-			// stop executing code by return
-			return;
+					"Please connect to WiFi or 3g to use EasyOrder", false);
 		}
 		
 		btnEatIn = (Button) findViewById(R.id.btnEatIn);

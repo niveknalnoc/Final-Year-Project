@@ -20,19 +20,22 @@ import android.widget.Button;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import static ie.dcu.easyorderfyp.Utilities.URL_DOWNLOAD_MENU;
+
 public class EatInActivity extends Activity {
 	
     // Progress Dialog
     private ProgressDialog pDialog;
- 
-    // Creating JSON Parser object
-    JSONParser jParser = new JSONParser();
- 
-    ArrayList<MenuItem> downloadedMenuItems = null;
- 
-    // url to get all products list
-    private static String url_all_items = "http://192.168.1.12/easyorder_server/get_items.php";
- 
+    
+    // Internet detector
+  	ConnectionDetector cd;
+    
+  	// Creating JSON Parser object
+    WebCallService webCall; 
+    
+    // ArrayList to hold the downloaded menu items
+    ArrayList<MenuItem> downloadedMenuItems;
+    
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PRODUCTS = "items";
@@ -41,7 +44,7 @@ public class EatInActivity extends Activity {
     private static final String TAG_PRICE = "price";
     private static final String TAG_AVAILABLE = "available";
  
-    // products JSONArray
+    // Products JSONArray
     JSONArray items = null;
 	
 	private Button btnScanTable;
@@ -58,12 +61,24 @@ public class EatInActivity extends Activity {
 	private IntentResult activityResultIntent;
 	
 	// alert dialog manager
-	AlertDialogManager alert = new AlertDialogManager();
+	AlertDialogManager alert;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_eat_in);
+		
+		webCall = new WebCallService();
+		alert = new AlertDialogManager();
+		cd = new ConnectionDetector(getApplicationContext());
+
+		// Check if Internet present
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			alert.showAlertDialog(EatInActivity.this,
+					"Internet Connection Error",
+					"Please connect to WiFi or 3g to use EasyOrder", false);
+		}
 		
 		btnScanTable = (Button) findViewById(R.id.btnScan);
 		
@@ -83,7 +98,8 @@ public class EatInActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// if user hasn't pressed back button at the scan item screen
+		
+		// If user hasn't pressed back button at the scan item screen
 		if(return_flag == false) {
 			// parse scanned code
 			if (thisRequestCode == 49374) {
@@ -122,9 +138,11 @@ public class EatInActivity extends Activity {
 		if(firstToken.equals("T") && codeContents.length() > 1) {
 			try{
 				int tableNumber = Integer.parseInt(codeContents.substring(1));
+				if(tableNumber > 0)
 				validator = true;
+				else
+					validator = false;
 			}catch(NumberFormatException e){
-				validator = false;
 			}
 		}
 		return validator;
@@ -157,7 +175,7 @@ public class EatInActivity extends Activity {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             
             // getting JSON string from URL
-            JSONObject json = jParser.makeHttpRequest(url_all_items, params);
+            JSONObject json = webCall.makeHttpRequest(URL_DOWNLOAD_MENU, params);
  
             // Check your log cat for JSON response
             Log.d("All Items: ", json.toString());
@@ -186,7 +204,7 @@ public class EatInActivity extends Activity {
                         downloadedMenuItems.add(new MenuItem(item_id,item_name,item_price,item_available));
                     }
                 } else {
-                    // no menu items found ** HANDLE ERROR **
+                    // no menu items found - set flag
                 	no_items_error_flag = true;
                 }
             } catch (JSONException e) {
@@ -206,7 +224,8 @@ public class EatInActivity extends Activity {
             runOnUiThread(new Runnable() {
                 public void run() {
                 	if(no_items_error_flag == true) {
-                		//SEND TO A NEW ACTIVITY STATING ERROR PLEASE CONTACT STAFF - NO MENU IN DATABASE
+                		Intent error = new Intent(getApplicationContext(), EasyOrderERROR.class);
+                		startActivity(error);
                 	}else {
                 		Intent scanItemsIntent = new Intent(getApplicationContext(), ScanItemsActivity.class);
                 		scanItemsIntent.putExtra("tableNumber", codeContents.substring(1));

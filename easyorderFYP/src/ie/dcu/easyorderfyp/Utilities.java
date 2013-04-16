@@ -5,18 +5,22 @@ import android.content.Intent;
 
 public class Utilities {
 	
-	// give your server registration url here
+	// GCM registration url
     static final String REGISTER_SERVER_URL = "http://192.168.1.12/easyorder_server/register.php"; 
+    // GCM unregister url
     static final String UNREGISTER_SERVER_URL = "http://192.168.1.12/easyorder_server/unregister.php"; 
-    
+    // Url to get all items from the database
+    static final String URL_DOWNLOAD_MENU = "http://192.168.1.12/easyorder_server/get_items.php";
+    // url to submit order
+    static final String URL_SUBMIT_ORDER = "http://192.168.1.12/easyorder_server/submit_order.php";
 
     // Google project id
     static final String SENDER_ID = "543416993618"; 
 
     static final String DISPLAY_MESSAGE_ACTION =
-            "EASYORDER";
+            "EasyOrder";
 
-    static final String EXTRA_MESSAGE = "message";
+    static final String EXTRA_MESSAGE = "Message";
 
     /**
      * Notifies UI to display a message.

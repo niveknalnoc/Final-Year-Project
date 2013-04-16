@@ -16,12 +16,12 @@ public class TakeAwayActivity extends Activity {
 		public static String name;
 		public static String user_pin;
 
-		// alert dialog manager
-		AlertDialogManager alert = new AlertDialogManager();
-		
 		// UI elements
 		EditText txtName;
 		EditText txtPin;
+		
+		// alert dialog manager
+		AlertDialogManager alert;
 		
 		// Register button
 		Button btnRegister;
@@ -30,6 +30,8 @@ public class TakeAwayActivity extends Activity {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_take_away);
+			
+			alert = new AlertDialogManager();
 			
 			// Check if GCM configuration is set
 			if (REGISTER_SERVER_URL == null || UNREGISTER_SERVER_URL == null || SENDER_ID == null || REGISTER_SERVER_URL.length() == 0 
@@ -52,7 +54,7 @@ public class TakeAwayActivity extends Activity {
 				
 				@Override
 				public void onClick(View arg0) {
-					// Read EditText dat
+					// read users name and pin
 					name = txtName.getText().toString();
 					user_pin = txtPin.getText().toString();
 					
@@ -68,8 +70,7 @@ public class TakeAwayActivity extends Activity {
 						startActivity(i);
 						finish();
 					}else{
-						// user doen't filled that data
-						// ask him to fill the form
+						// User entered no details
 						alert.showAlertDialog(TakeAwayActivity.this, "Registration Error!", "Please enter your details", false);
 					}
 				}
