@@ -74,13 +74,16 @@ public class OrderListAdapter extends ArrayAdapter<MenuItem> {
         MenuItem item = data.get(position);
         holder.name.setText(item.getItemName());
         holder.quantity.setText("" + quantities.get(position) + " x");
-        //holder.price.setText(item.getPrice()(quantities.get(position)));
+        Double price = item.getPrice();
+        String priceToString = String.valueOf(price);
+        holder.price.setText(priceToString);
         
         //set up quantity button
         final int tempPosition = position;
         final Context tempContext = context;
         holder.quantity.setOnClickListener(new OnClickListener() {
-			@Override
+			
+        	@Override
 			public void onClick(View v) {
 				FragmentActivity tempActivity = (FragmentActivity) tempContext;
 				QuantityDialog.newInstance(quantities.get(tempPosition), tempPosition)
@@ -100,7 +103,7 @@ public class OrderListAdapter extends ArrayAdapter<MenuItem> {
     	data.add(item);
     	this.notifyDataSetChanged();
     }
-
+    
     /**
      * Called to change a quantity
      * @param index

@@ -19,7 +19,6 @@ public class QuantityDialog extends DialogFragment {
 		QuantityDialog instance = new QuantityDialog();
 		
 		Bundle args = new Bundle();
-		System.out.println("curr"+ currentQuan);
         args.putInt("quantity", currentQuan);
         args.putInt("index", itemIndex);
         instance.setArguments(args);
@@ -47,7 +46,6 @@ public class QuantityDialog extends DialogFragment {
 		int MAX_ITEM = 30;
 		
 		final NumberPicker np = new NumberPicker(getActivity());
-		System.out.println("inside" + quantity);
 		np.setMinValue(0);
 		np.setMaxValue(MAX_ITEM);
 		np.setValue(quantity);

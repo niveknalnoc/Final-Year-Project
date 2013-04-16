@@ -1,5 +1,8 @@
 package ie.dcu.easyorderfyp;
 
+import static ie.dcu.easyorderfyp.Utilities.URL_SUBMIT_ORDER;
+import ie.dcu.easyorderfyp.QuantityDialog.QuanityChangeListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +16,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +26,7 @@ import android.widget.TextView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import static ie.dcu.easyorderfyp.Utilities.URL_SUBMIT_ORDER;
-
-public class ScanItemsActivity extends Activity {
+public class ScanItemsActivity extends FragmentActivity implements QuanityChangeListener {
 	
 	private Button btnScanItems;
 	private Button btnSubmitButton;
@@ -61,7 +63,6 @@ public class ScanItemsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan_item);
 		
-		Log.e("Here", "");
 		webCall = new WebCallService();
 		alert = new AlertDialogManager();
 		scannedItems = new ArrayList<MenuItem>();
@@ -160,7 +161,6 @@ public class ScanItemsActivity extends Activity {
 		adapter.addOrderItem(item);
 	}
 	
-	
 	/**
 	 * Submit the order
 	 */
@@ -179,6 +179,7 @@ public class ScanItemsActivity extends Activity {
 	 */
 	private void orderSubmitted() {
 		//Bring user to next screen
+		
 		Intent error = new Intent(getApplicationContext(), OrderSubmitted.class);
 		startActivity(error);
 	}

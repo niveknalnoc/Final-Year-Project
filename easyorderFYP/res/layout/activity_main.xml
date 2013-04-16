@@ -13,25 +13,6 @@
         android:layout_marginTop="22dp"
         android:src="@drawable/easyorder_logo" />
     
-    <TextView
-        android:id="@+id/txtHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:textStyle="bold"
-        android:layout_below="@+id/logo"
-        android:text="@string/welcome_header"
-        android:layout_margin="20dp" />
-    
-     <TextView
-        android:id="@+id/txtMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtHeader"
-        android:layout_below="@+id/txtHeader"
-        android:layout_margin="20dp"
-        android:text="@string/welcome_message_main" />
-    
     <LinearLayout
         android:orientation="horizontal"
         android:paddingLeft="4.0dip"
@@ -57,5 +38,27 @@
             android:layout_weight="1.0" />
         
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/welcome_header"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_marginTop="21dp"
+        android:text="@string/welcome_message_main" />
 
 </RelativeLayout>

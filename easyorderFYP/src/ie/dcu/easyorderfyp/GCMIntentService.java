@@ -95,8 +95,6 @@ public class GCMIntentService extends GCMBaseIntentService {
         // Play default notification sound
         notification.defaults |= Notification.DEFAULT_SOUND;
         
-        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
-        
         // Vibrate if vibrate is enabled
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);      
