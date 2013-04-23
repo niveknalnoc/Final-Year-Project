@@ -2,6 +2,7 @@ package ie.dcu.easyorderfyp;
 
 import static ie.dcu.easyorderfyp.Utilities.SENDER_ID;
 import static ie.dcu.easyorderfyp.Utilities.displayMessage;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,7 +25,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         displayMessage(context, "Your device registred with GCM");
-        ServerUtilities.register(context, TakeAwayActivity.name, TakeAwayActivity.user_pin, registrationId);
+        ServerUtilities.register(context, MainActivity.username, MainActivity.password, registrationId);
     }
 
     /**

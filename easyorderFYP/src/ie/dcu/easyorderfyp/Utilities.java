@@ -13,6 +13,10 @@ public class Utilities {
     static final String URL_DOWNLOAD_MENU = "http://192.168.1.12/easyorder_server/get_items.php";
     // url to submit order
     static final String URL_SUBMIT_ORDER = "http://192.168.1.12/easyorder_server/submit_order.php";
+    // url to add user
+    static final String URL_REGISTER_USER = "http://192.168.1.12/easyorder_server/add_user.php";
+    // url to get users
+    static final String URL_GET_USER = "http://192.168.1.12/easyorder_server/get_users.php";
 
     // Google project id
     static final String SENDER_ID = "543416993618"; 

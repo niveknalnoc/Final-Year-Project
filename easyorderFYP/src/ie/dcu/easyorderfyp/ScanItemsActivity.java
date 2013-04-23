@@ -39,9 +39,8 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	private String tableNumber;
 
 	// arraylist to hold the menu, itemsScaned and the order
-	ArrayList<MenuItem> menu;
-	ArrayList<MenuItem> scannedItems;
-	ArrayList<Order> order;
+	private ArrayList<MenuItem> menu;
+	private ArrayList<MenuItem> scannedItems;
 	
 	final Activity returnActivity = this;
 	
@@ -84,8 +83,6 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
         		this,
         		R.layout.order_item_list
         ));
-        
-        final Activity returnActivity = this;
         
         btnScanItems = (Button) findViewById(R.id.btnScanItem);
 		
@@ -179,9 +176,8 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	 */
 	private void orderSubmitted() {
 		//Bring user to next screen
-		
-		Intent error = new Intent(getApplicationContext(), OrderSubmitted.class);
-		startActivity(error);
+		Intent orderSubmitted = new Intent(getApplicationContext(), OrderSubmitted.class);
+		startActivity(orderSubmitted);
 	}
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -308,7 +304,6 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			pDialog.dismiss();
-			//orderSubmitted();
 		}
 		
 	}

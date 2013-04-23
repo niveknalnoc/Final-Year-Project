@@ -24,8 +24,8 @@ public class RegisterActivity extends Activity {
 		// Alert dialog manager
 		AlertDialogManager alert = new AlertDialogManager();
 		
-		public static String name;
-		public static String user_pin;
+		public static String username;
+		public static String password;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,12 @@ public class RegisterActivity extends Activity {
 			// Getting name, user_pin from intent
 			Intent i = getIntent();
 			
-			name = i.getStringExtra("name");
-			user_pin = i.getStringExtra("pin");		
+			username = i.getStringExtra("username");
+			password = i.getStringExtra("password");	
+			
+			Toast.makeText(getApplicationContext(), username + 
+					username + " " + password, 
+					Toast.LENGTH_LONG).show();
 			
 			// Make sure the device has the proper dependencies.
 			GCMRegistrar.checkDevice(this);
@@ -71,7 +75,7 @@ public class RegisterActivity extends Activity {
 						protected Void doInBackground(Void... params) {
 							// Register on our server
 							// On server creates a new user
-							ServerUtilities.register(context, name, user_pin, regId);
+							ServerUtilities.register(context, username, password, regId);
 							return null;
 						}
 

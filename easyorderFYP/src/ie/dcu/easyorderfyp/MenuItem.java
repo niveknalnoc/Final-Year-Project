@@ -100,5 +100,4 @@ public class MenuItem implements Parcelable{
 		return true;
 	}
 	
-	
 }

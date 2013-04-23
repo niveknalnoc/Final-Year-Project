@@ -3,13 +3,19 @@ package ie.dcu.easyorderfyp;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class OrderSubmitted extends Activity {
+public class Receipt extends Activity {
 
+	private int selected;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_order_submitted);
-		
+		setContentView(R.layout.activity_receipt);
 	}
-	
+
+	@Override
+	public void onResume() {
+	  super.onResume();
+	}
+
 }
