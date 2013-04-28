@@ -36,6 +36,13 @@
             android:layout_height="fill_parent"
             android:text="@string/take_away"
             android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:text="Logout" />
         
     </LinearLayout>
 

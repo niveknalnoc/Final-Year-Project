@@ -109,15 +109,23 @@
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.Receipt"
-            android:label="@string/title_activity_receipt" >
+            android:label="@string/title_activity_receipt" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.LoggedInActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.EasyOrderERROR"
-            android:label="@string/title_activity_easyorderERROR" >
+            android:label="@string/title_activity_easyorderERROR" 
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ie.dcu.easyorderfyp.LoggedOut"
+            android:label="@string/title_activity_logged_out" 
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

@@ -37,27 +37,30 @@
     <string name="title_activity_Register_Activity">RegisterActivity</string>
     <string name="title_activity_scan_items">ScanItemsActivity</string>
     <string name="title_activity_order_submitted">OrderSubmitted</string>
-     <string name="title_activity_easyorderERROR">ERROR</string>
+    <string name="title_activity_easyorderERROR">ERROR</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_logged_out">LoggedOut</string>
 
     <!-- EasyOrder -->
     <string name="full_name">Full Name</string>
     <string name="pin">Pin</string>
-    <string name="register">Register</string>
     <string name="welcome_message">To start ordering first scan your table locator QR code on the table</string>
     <string name="welcome_header">Welcome to EasyOrder</string>
     <string name="welcome_message_main">Please choose an option below to start ordering food!</string>
     <string name="eat_in_instructions">Please scan your table QR locator code to begin ordering food!</string>
+    <string name="register_login_txt">Please login! If you are a new user please register</string>
     <string name="scan_item">Scan Item</string>
     <string name="scan_code">Scan Code</string>
     <string name="table_number">Table Number</string>
     <string name="scan_instructions">To start ordering from the menu start scanning items! Your items will appear below!</string>
     <string name="quantity_dialog_title">How Many?</string>
     <string name="submit_order">Submit Order</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>  
     <string name="order_empty_desc">You have to choose at least 1 item from the menu before you place an order</string>
     <string name="title_activity_receipt">Receipt</string>
     <string name="hello_world">Hello world!</string>
     <string name="your_order">Your Order</string>
     <string name="items">Items</string>
-    <string name="title_activity_login">Login</string>
 
 </resources>

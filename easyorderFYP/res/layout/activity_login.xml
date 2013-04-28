@@ -16,16 +16,6 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/easyorder_logo" />
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextPassword"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/editTextPassword"
-        android:layout_marginBottom="32dp"
-        android:text="Login" />
-
     <TextView
         android:id="@+id/TextViewPassword"
         android:layout_width="wrap_content"
@@ -58,16 +48,6 @@
         android:text="Username"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/login"
-        android:layout_alignRight="@+id/editTextUsername"
-        android:layout_marginBottom="32dp"
-        android:ems="10"
-        android:inputType="textPassword" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -75,7 +55,45 @@
         android:layout_below="@+id/Logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
-        android:text="Please Login, If you are a new user, enter your details to automatically register and Login!"
+        android:text="@string/register_login_txt"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal"
+        android:paddingBottom="1.0dip"
+        android:paddingLeft="4.0dip"
+        android:paddingRight="4.0dip"
+        android:paddingTop="10.0dip" >
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="0.0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:text="@string/register" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="textPassword" />
 
 </RelativeLayout>
