@@ -26,11 +26,11 @@ public class User implements Parcelable{
 		 this.username = user_name;
 	}
 	
-	public int getItemId() {
+	public int getUserId() {
 		return id;
 	}
 	
-	public void setId(int ID) {
+	public void setUserId(int ID) {
 		 this.id = ID;
 	}
 	

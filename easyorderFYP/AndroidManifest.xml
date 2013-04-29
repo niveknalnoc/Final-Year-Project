@@ -74,7 +74,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="ie.dcu.easyorderfyp.EatInActivity"
+            android:name="ie.dcu.easyorderfyp.TableLocator"
             android:configChanges="orientation"
             android:label="@string/title_activity_eat_in"
             android:screenOrientation="portrait" >
@@ -109,22 +109,27 @@
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.Receipt"
-            android:label="@string/title_activity_receipt" 
+            android:label="@string/title_activity_receipt"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.LoggedInActivity"
-            android:label="@string/title_activity_login" 
+            android:label="@string/title_activity_login"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.EasyOrderERROR"
-            android:label="@string/title_activity_easyorderERROR" 
+            android:label="@string/title_activity_easyorderERROR"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="ie.dcu.easyorderfyp.LoggedOut"
-            android:label="@string/title_activity_logged_out" 
+            android:label="@string/title_activity_logged_out"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="ie.dcu.easyorderfyp.PreviousOrders"
+            android:label="@string/title_activity_previous_orders"
             android:screenOrientation="portrait" >
         </activity>
     </application>

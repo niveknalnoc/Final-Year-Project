@@ -24,22 +24,25 @@ public class RegisterActivity extends Activity {
 		// Alert dialog manager
 		AlertDialogManager alert = new AlertDialogManager();
 		
+		// Variables for Login Data
+		public static int user_id;
 		public static String username;
 		public static String password;
+		
+		public static boolean isRegistered = false;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.activity_main);
+			setContentView(R.layout.blank);
 			
-			// Getting name, user_pin from intent
-			Intent i = getIntent();
+			Bundle b = this.getIntent().getExtras();
+			user_id = b.getInt("user_id");
+			username = b.getString("username");
+			password = b.getString("password");
 			
-			username = i.getStringExtra("username");
-			password = i.getStringExtra("password");	
-			
-			Toast.makeText(getApplicationContext(), username + 
-					username + " " + password, 
+			Toast.makeText(getApplicationContext(), 
+					username + " " + password + " " + user_id, 
 					Toast.LENGTH_LONG).show();
 			
 			// Make sure the device has the proper dependencies.
@@ -51,19 +54,29 @@ public class RegisterActivity extends Activity {
 			registerReceiver(mHandleMessageReceiver, new IntentFilter(
 					DISPLAY_MESSAGE_ACTION));
 			
-			// Get GCM registration id
+			// Get GCM registration user_id
 			final String regId = GCMRegistrar.getRegistrationId(this);
 
 			// Check if regid already presents
 			if (regId.equals("")) {
 				// Registration is not present, register now with GCM			
 				GCMRegistrar.register(this, SENDER_ID);
+				isRegistered = true;
+				Intent i = new Intent(getApplicationContext(), TableLocator.class);
+				i.putExtra("username", username);
+				i.putExtra("user_id", user_id);
+				System.out.println("user_id RegisterActivity(user registered -> eatinactivity: " + user_id);
+				startActivity(i);
 			} else {
 				// Device is already registered on GCM
 				if (GCMRegistrar.isRegisteredOnServer(this)) {
 					// Skips registration.	
-					GCMRegistrar.unregister(this);
-					Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
+					isRegistered = true;
+					Intent i = new Intent(getApplicationContext(), TableLocator.class);
+					i.putExtra("username", username);
+					i.putExtra("user_id", user_id);
+					startActivity(i);
+					Toast.makeText(getApplicationContext(), "Oops..Device already registered with GCM... Moving on :)", Toast.LENGTH_LONG).show();
 				} else {
 					// Try to register again, but not in the UI thread.
 					// It's also necessary to cancel the thread onDestroy(),
@@ -87,6 +100,7 @@ public class RegisterActivity extends Activity {
 					};
 					mRegisterTask.execute(null, null, null);
 				}
+				
 			}
 		}		
 

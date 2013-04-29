@@ -17,7 +17,8 @@ public class Utilities {
     static final String URL_REGISTER_USER = "http://192.168.1.12/easyorder_server/add_user.php";
     // url to get users
     static final String URL_GET_USER = "http://192.168.1.12/easyorder_server/get_users.php";
-    
+    // url to get users orders
+    static final String URL_GET_USERS_ORDERS = "http://192.168.1.12/easyorder_server/get_users_orders.php";
 	
     /**
      * 
@@ -36,7 +37,9 @@ public class Utilities {
     // url to add user
     static final String URL_REGISTER_USER = "http://136.206.113.140/easyorder_server/add_user.php";
     // url to get users
-    static final String URL_GET_USER = "http://136.206.113.140/easyorder_server/get_users.php";*/
+    static final String URL_GET_USER = "http://136.206.113.140/easyorder_server/get_users.php";
+    // url to get users orders
+    static final String URL_GET_USERS_ORDERS = "http://192.168.1.12/easyorder_server/get_users_orders.php";*/
 
     // Google project id
     static final String SENDER_ID = "543416993618"; 

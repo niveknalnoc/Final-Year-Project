@@ -13,39 +13,6 @@
         android:layout_marginTop="22dp"
         android:src="@drawable/easyorder_logo" />
     
-    <LinearLayout
-        android:orientation="horizontal"
-        android:paddingLeft="4.0dip"
-        android:paddingTop="10.0dip"
-        android:paddingRight="4.0dip"
-        android:paddingBottom="1.0dip"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtMessage">
-
-        <Button
-            android:id="@+id/btnEatIn"
-            android:layout_width="0.0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0"
-            android:text="@string/eat_in" />
-
-        <Button
-            android:id="@+id/btnTakeAway"
-            android:layout_width="0.0dip" 
-            android:layout_height="fill_parent"
-            android:text="@string/take_away"
-            android:layout_weight="1.0" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="Logout" />
-        
-    </LinearLayout>
-
     <TextView
         android:id="@+id/txtHeader"
         android:layout_width="wrap_content"
@@ -67,5 +34,41 @@
         android:layout_margin="20dp"
         android:layout_marginTop="21dp"
         android:text="@string/welcome_message_main" />
+
+    <Button
+        android:id="@+id/btnEatIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtMessage"
+        android:layout_alignRight="@+id/txtMessage"
+        android:layout_below="@+id/txtMessage"
+        android:text="Eat In" />
+
+    <Button
+        android:id="@+id/btnTakeAway"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnEatIn"
+        android:layout_alignRight="@+id/btnEatIn"
+        android:layout_below="@+id/btnEatIn"
+        android:text="Take Away" />
+
+    <Button
+        android:id="@+id/btnPrevOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnTakeAway"
+        android:layout_alignRight="@+id/btnTakeAway"
+        android:layout_below="@+id/btnTakeAway"
+        android:text="Prev Orders" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnPrevOrders"
+        android:layout_alignRight="@+id/btnPrevOrders"
+        android:layout_below="@+id/btnPrevOrders"
+        android:text="Logout" />
 
 </RelativeLayout>

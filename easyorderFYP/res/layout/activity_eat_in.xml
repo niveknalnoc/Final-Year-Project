@@ -5,7 +5,7 @@
     android:layout_centerHorizontal="true" >
     
     <TextView
-        android:id="@+id/txtEatIn"
+        android:id="@+id/txtDineOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -18,8 +18,8 @@
         android:id="@+id/txtMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtEatIn"
-        android:layout_below="@+id/txtEatIn"
+        android:layout_alignLeft="@+id/txtDineOption"
+        android:layout_below="@+id/txtDineOption"
         android:layout_margin="20dp"
         android:text="@string/eat_in_instructions" />
 

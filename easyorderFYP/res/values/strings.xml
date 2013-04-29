@@ -56,11 +56,13 @@
     <string name="quantity_dialog_title">How Many?</string>
     <string name="submit_order">Submit Order</string>
     <string name="login">Login</string>
-    <string name="register">Register</string>  
+    <string name="register">Register</string>
     <string name="order_empty_desc">You have to choose at least 1 item from the menu before you place an order</string>
     <string name="title_activity_receipt">Receipt</string>
     <string name="hello_world">Hello world!</string>
     <string name="your_order">Your Order</string>
     <string name="items">Items</string>
+    <string name="title_activity_previous_orders">PreviousOrders</string>
+    <string name ="previous_orders_txt">Your Previous Orders</string>
 
 </resources>

@@ -13,7 +13,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -33,7 +35,7 @@ public class MainActivity extends Activity {
 	// Variables for Login Data
 	public static String username;
 	public static String password;
-	public static int id;
+	public static int user_id;
 	public static boolean isLoggedIn;
 	
 	// EditText
@@ -57,10 +59,6 @@ public class MainActivity extends Activity {
 	private static final String REGISTER = "register";
 	private static final String LOGIN = "login";
 	
-	
-	// ArrayList to hold the users downloaded
-	ArrayList<User> downloadedUsersList;
-
 	// JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_USERS = "users";
@@ -146,7 +144,6 @@ public class MainActivity extends Activity {
 
 		    		if(username.length() > 0 && password.length() > 0){
 		    			// call to server to identify if user is a registered user
-		    			downloadedUsersList = new ArrayList<User>();
 		    			this_user = new User(00, username, password);
 		    			// Loading users in Background Thread
 		    			// required to check if user is already registered
@@ -172,7 +169,6 @@ public class MainActivity extends Activity {
 
 		    		if(username.length() > 0 && password.length() > 0){
 		    			// call to server to identify if user is a registered user
-		    			downloadedUsersList = new ArrayList<User>();
 		    			this_user = new User(00, username, password);
 		    			// Loading users in Background Thread
 		    			// required to check if user is already registered
@@ -241,26 +237,20 @@ public class MainActivity extends Activity {
                         String password = c.getString(TAG_PASSWORD);
  
                         // storing menu items object in arraylist
-                        downloadedUsersList.clear();
-                        downloadedUsersList.add(new User(id, username, password));
+                        this_user.setUserId(id);
+            			this_user.setUserName(username);
+            			this_user.setPassword(password);
+                        user_found = true;
                         Log.d("LOADALLUSERS","LOADALLUSERS");
                     }
                     
-                } 
+                }else{
+                	user_found = false;
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             
-            /*if(no_users_located ==  true){
-            	Log.d("LOADALLUSERS","REGISTER USER");
-            	registerUser(downloadedUsersList);
-            	BUTTONPRESSED = REGISTER;
-            }else{
-            	Log.d("LOADALLUSERS","LOGIN USER");
-            	loginUser(downloadedUsersList);
-            	BUTTONPRESSED = LOGIN;
-            }*/
- 
             return null;
         }
         
@@ -274,82 +264,50 @@ public class MainActivity extends Activity {
             runOnUiThread(new Runnable() {
                 public void run() {
 
-                	user_found = searchForUser(downloadedUsersList);
-                    
                     if(user_found == true){
                     	//login
                     	logUserIn();
                     }else{
-                    	//register
-                    	registerUser();
-                    }
-                	
-                	
-                	/*if(BUTTONPRESSED.equals(REGISTER)){
-                		Log.d("LOADALLUSERS","REGISTER BUTTON onPostExecute");
-                		if(user_found == true){
-                			Log.d("LOADALLUSERS","user_found = true");
-                			Toast.makeText(getApplicationContext(), username + 
-                			" you are already registered, please login", 
-                				Toast.LENGTH_LONG).show();
-                    			
-                		}else if(user_found == false){
-                			Log.d("LOADALLUSERS"," user_found = false");
-                			Toast.makeText(getApplicationContext(), username + 
-                			" you are a new user! Welcome - creating your login details now...", 
-                       			Toast.LENGTH_LONG).show();
-
-                			BUTTONPRESSED = LOGIN;
-                			new CreateNewUser().execute();
-                		}
-                	}else if(BUTTONPRESSED.equals(LOGIN)){
-                		Log.d("LOADALLUSERS","LOGIN BUTTON onPostExecute");
-                		if(user_found == true && isLoggedIn == true){
-                			Log.d("LOADALLUSERS"," user_found = TRUE");
-                			Toast.makeText(getApplicationContext(), 
-                				" Welcome back "+ username +" logging you in now..." , 
-                        		Toast.LENGTH_LONG).show();
-
-                			Intent i = new Intent(getApplicationContext(), LoggedInActivity.class);
-                			i.putExtra("this_user", this_user);
-                			startActivity(i);
-                        		
-                    	}else if(user_found == false && isLoggedIn == false){
-                    		Log.d("LOADALLUSERS"," user_found = false");
-                    		Toast.makeText(getApplicationContext(), username + 
-                    			" not found, please register to continue", 
-                        		Toast.LENGTH_LONG).show();
+                    	if(BUTTONPRESSED.equals(LOGIN)){
+                    		userNotFoundSplashScreen();
                     	}
-                    }*/
+                    	else{
+                    		//register
+                        	registerUser();
+                    	}
+                    }
                 }
             });
  
         }	
     }
     
-    boolean searchForUser(ArrayList<User> downloadedUsersList){
-    	
-    	String name = this_user.getUserName();
-		String pword = this_user.getPassword();
-		boolean match = false;
-		
-    	for(int i = 0 ; i < downloadedUsersList.size() ; i++){
+	private void userNotFoundSplashScreen() {
 
-    		if(downloadedUsersList.get(i).getUserName().equalsIgnoreCase(name) && downloadedUsersList.get(i).getPassword().equalsIgnoreCase(pword)){
-    			this_user.setId(downloadedUsersList.get(i).getItemId());
-    			this_user.setUserName(downloadedUsersList.get(i).getUserName());
-    			this_user.setPassword(downloadedUsersList.get(i).getPassword());
-    			match = true;
-   			}
-    	}
-    	
-    	if(match == true){
-    		return true;
-    	}else{
-    		return false;
-    	}
-    	
-    }
+		DialogInterface.OnClickListener dialogClickListener = 
+				new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+				switch (which) {
+				case DialogInterface.BUTTON_POSITIVE:
+					registerUser();
+					break;
+
+				case DialogInterface.BUTTON_NEGATIVE:
+					break;
+				}
+			}
+
+		};
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setTitle(this_user.getUserName());
+		builder.setMessage("User not found... What would you like to do?");
+		builder.setPositiveButton("Register", dialogClickListener);
+		builder.setNegativeButton("Enter Details Again", dialogClickListener).show();
+	}// end splashMenufavourites
     
     void registerUser() {
 
@@ -358,20 +316,6 @@ public class MainActivity extends Activity {
            			Toast.LENGTH_LONG).show();
     	new CreateNewUser().execute();
     	
-    	/*String name = this_user.getUserName();
-		String pword = this_user.getPassword();
-		
-    	for(int i = 0 ; i < downloadedUsersList.size() ; i++){
-
-    		if(downloadedUsersList.get(i).getUserName().equalsIgnoreCase(name) && downloadedUsersList.get(i).getPassword().equalsIgnoreCase(pword)){
-    			user_found = true;
-    			Log.d("REGISTERUSER"," user_found = true");
-   			}
-    	}
-    	if(!user_found == true)
-    		user_found = false;
-    	Log.d("REGISTERUSER"," user_found = false");*/
-    	
     }
     
     void logUserIn() {
@@ -379,31 +323,12 @@ public class MainActivity extends Activity {
     	setSharedPref(this_user, isLoggedIn);
     	
     	Toast.makeText(getApplicationContext(), 
-				" Welcome back "+ this_user.getUserName() +" logging you in now..." , 
+				" Hi "+ this_user.getUserName() +" logging you in now..." , 
         		Toast.LENGTH_LONG).show();
     	
     	Intent i = new Intent(getApplicationContext(), LoggedInActivity.class);
 		i.putExtra("this_user", this_user);
 		startActivity(i);
-    	
-    	/*String name = this_user.getUserName();
-		String pword = this_user.getPassword();
-		
-    	for(int i = 0 ; i < downloadedUsersList.size() ; i++){
-    		if(downloadedUsersList.get(i).getUserName().equalsIgnoreCase(name) && downloadedUsersList.get(i).getPassword().equalsIgnoreCase(pword)){
-    			// Match found - user already registered so set the user_id now for this_user!
-    			user_found = true;
-    			this_user = downloadedUsersList.get(i);
-    			Log.d("LOGINUSER","user_found = true");
-    		}
-    	}
-    	
-    	if(user_found == true){
-    		isLoggedIn = true;
-    		setSharedPref(this_user, isLoggedIn);
-    	}else if(user_found == false){
-    		isLoggedIn = false;
-    	}*/
     	
     }
     
@@ -415,13 +340,13 @@ public class MainActivity extends Activity {
         
         username = this_user.getUserName();
         password = this_user.getPassword();
-        id = this_user.getItemId();
+        user_id = this_user.getUserId();
         isLoggedIn = true;
         
         // save the user login data to shared preferences
         editor.putString("savedUsername", username);
         editor.putString("savedPassword", password);
-        editor.putInt("savedId", id);
+        editor.putInt("savedUserId", user_id);
         editor.putBoolean("isLoggedIn", isLoggedIn);
  
         // commit the edits
@@ -434,10 +359,10 @@ public class MainActivity extends Activity {
 		
         username = preferences.getString("savedUsername", "username not set");
         password = preferences.getString("savedPassword", "password not set");
-        id = preferences.getInt("savedId", 00);
+        user_id = preferences.getInt("savedUserId", 00);
         isLoggedIn = preferences.getBoolean("isLoggedIn", false);
         
-        this_user.setId(id);
+        this_user.setUserId(user_id);
         this_user.setPassword(password);
         this_user.setUserName(username);
         

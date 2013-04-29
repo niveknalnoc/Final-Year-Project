@@ -20,9 +20,10 @@ public class LoggedInActivity extends Activity {
 	private Button btnEatIn;
 	private Button btnTakeAway;
 	private Button btnLogout;
+	private Button btnPrevOrders;
 	
 	// Variables for Login Data
-	public static int id;
+	public static int user_id;
 	public static String username;
 	public static String password;
 	
@@ -43,12 +44,12 @@ public class LoggedInActivity extends Activity {
 		
 		username = current_user.getUserName();
 		password = current_user.getPassword();
+		user_id = current_user.getUserId();
 		
+		System.out.println("user_id LoggedInActivity : " + user_id);
 	}
 	
 	public void onBackPressed() {
-		//if back button pressed as does user want to logout
-        return;
     }   
 	
 	private void resetSharedPreferences(){
@@ -71,15 +72,17 @@ public class LoggedInActivity extends Activity {
 		btnEatIn = (Button) findViewById(R.id.btnEatIn);
 		btnTakeAway = (Button) findViewById(R.id.btnTakeAway);
 		btnLogout = (Button) findViewById(R.id.btnLogout);
+		btnPrevOrders = (Button) findViewById(R.id.btnPrevOrders);
 		
 		// eat in click event
 		btnEatIn.setOnClickListener(new View.OnClickListener() {
 				 
 			@Override
 			public void onClick(View view) {
-				Intent i = new Intent(getApplicationContext(), EatInActivity.class);
+				Intent i = new Intent(getApplicationContext(), TableLocator.class);
+				i.putExtra("username", username);
+				i.putExtra("user_id", user_id);
 				startActivity(i);
-				 
 			}
 		});
 				        
@@ -101,16 +104,18 @@ public class LoggedInActivity extends Activity {
 				// Launch Main Activity
 				Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
 				// Registering user on our server					
-				// Sending registraiton details to MainActivity
+				// Sending registration details to MainActivity
 				i.putExtra("username", username);
 				i.putExtra("password", password);
+				System.out.println("user_id button Take Away : " + user_id);
+				i.putExtra("user_id", user_id);
 				startActivity(i);
 				finish();
 				 
 			}
 		});
 		
-		// eat in click event
+		// Logout button click event
 		btnLogout.setOnClickListener(new View.OnClickListener() {
 						 
 			@Override
@@ -119,6 +124,18 @@ public class LoggedInActivity extends Activity {
 				resetSharedPreferences();
 				// Bring the user back to the main screen
 				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				startActivity(i);
+			}
+		});
+		
+		// eat in click event
+		btnPrevOrders.setOnClickListener(new View.OnClickListener() {
+						 
+			@Override
+			public void onClick(View view) {
+				Intent i = new Intent(getApplicationContext(), PreviousOrders.class);
+				i.putExtra("username", username);
+				i.putExtra("user_id", user_id);
 				startActivity(i);
 			}
 		});

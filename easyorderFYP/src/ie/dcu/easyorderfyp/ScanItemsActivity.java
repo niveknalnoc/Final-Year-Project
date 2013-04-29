@@ -37,6 +37,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	private int thisResultCode;
 	private String codeContents;
 	private String tableNumber;
+	private int user_id;
 
 	// arraylist to hold the menu, itemsScaned and the order
 	private ArrayList<MenuItem> menu;
@@ -69,7 +70,10 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 		
 		Bundle b = this.getIntent().getExtras();
 		tableNumber = b.getString("tableNumber");
+		user_id = b.getInt("user_id");
 		menu = getIntent().getParcelableArrayListExtra("downloadedMenuItems");
+		
+		System.out.println("user_id scannedItemsActivity : " + user_id);
 		
 		// display table number at the top of the screen
 		tvTableNum = (TextView) findViewById(R.id.txtTableNumber);
@@ -266,10 +270,12 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 				return null;
 			}
 			
+			System.out.println("Integer.toString(user_id) : " + Integer.toString(user_id));
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
 	        param.add(new BasicNameValuePair("table", tableNumber));
+	        param.add(new BasicNameValuePair("user_id", Integer.toString(user_id)));
 	        param.add(new BasicNameValuePair("order_string", orderString));
-
+	        
 	     	// getting JSON Object
             // Note that create product url accepts POST method
             JSONObject json = webCall.makeHttpRequest(URL_SUBMIT_ORDER, param);
@@ -305,7 +311,5 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 			super.onPostExecute(result);
 			pDialog.dismiss();
 		}
-		
 	}
-
 }

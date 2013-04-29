@@ -16,13 +16,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import static ie.dcu.easyorderfyp.RegisterActivity.isRegistered;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import static ie.dcu.easyorderfyp.Utilities.URL_DOWNLOAD_MENU;
 
-public class EatInActivity extends Activity {
+public class TableLocator extends Activity {
 	
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -52,6 +54,12 @@ public class EatInActivity extends Activity {
 	private int thisResultCode;
 	private String codeContents;
 	
+	private TextView tvDineOption;
+	
+	// Variables for Login Data
+	public static int user_id;
+	public static String username;
+	
 	// no_iems_error_flag is set if no items found , return_flag is set to escape activity back to main menu
 	private boolean no_items_error_flag = false;
 	private boolean return_flag = false;
@@ -68,14 +76,30 @@ public class EatInActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_eat_in);
 		
+		if(isRegistered == true){
+			// display take-away at the top of the screen
+			tvDineOption = (TextView) findViewById(R.id.txtDineOption);
+			tvDineOption.setText("Take-Away Order");
+		}else{
+			// display eat in at the top of the screen
+			tvDineOption = (TextView) findViewById(R.id.txtDineOption);
+			tvDineOption.setText("Eat In Order");
+		}
+		
 		webCall = new WebCallService();
 		alert = new AlertDialogManager();
 		cd = new ConnectionDetector(getApplicationContext());
+		
+		Bundle b = this.getIntent().getExtras();
+		user_id = b.getInt("user_id");
+		username = b.getString("username");
+		
+		System.out.println(user_id);
 
 		// Check if Internet present
 		if (!cd.isConnectingToInternet()) {
 			// Internet Connection is not present
-			alert.showAlertDialog(EatInActivity.this,
+			alert.showAlertDialog(TableLocator.this,
 					"Internet Connection Error",
 					"Please connect to WiFi or 3g to use EasyOrder", false);
 		}
@@ -159,7 +183,7 @@ public class EatInActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(EatInActivity.this);
+            pDialog = new ProgressDialog(TableLocator.this);
             pDialog.setTitle("Setting Up The Menu! ");
             pDialog.setMessage("Loading Menu Items...");
             pDialog.setIndeterminate(false);
@@ -229,6 +253,7 @@ public class EatInActivity extends Activity {
                 	}else {
                 		Intent scanItemsIntent = new Intent(getApplicationContext(), ScanItemsActivity.class);
                 		scanItemsIntent.putExtra("tableNumber", codeContents.substring(1));
+                		scanItemsIntent.putExtra("user_id", user_id);
                 		scanItemsIntent.putParcelableArrayListExtra ("downloadedMenuItems", downloadedMenuItems);
                 		startActivity(scanItemsIntent);
                 	}
@@ -237,5 +262,10 @@ public class EatInActivity extends Activity {
  
         }	
     }
+    
+    /*public void onBackPressed() {
+		//if back button pressed as does user want to logout
+        
+    } */ 
 
 }
