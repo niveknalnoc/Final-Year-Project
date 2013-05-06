@@ -3,6 +3,7 @@ package ie.dcu.easyorderfyp;
 import com.google.android.gcm.GCMRegistrar;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import static ie.dcu.easyorderfyp.RegisterActivity.isRegistered;
@@ -18,7 +19,11 @@ public class OrderSubmitted extends Activity {
 			GCMRegistrar.unregister(this);
 		}
 		
-		
 	}
 	
+	@Override
+	public void onBackPressed() {
+		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+		startActivity(i);
+	}
 }

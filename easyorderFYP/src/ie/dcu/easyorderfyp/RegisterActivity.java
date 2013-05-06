@@ -1,8 +1,8 @@
 package ie.dcu.easyorderfyp;
 
-import static ie.dcu.easyorderfyp.Utilities.DISPLAY_MESSAGE_ACTION;
-import static ie.dcu.easyorderfyp.Utilities.EXTRA_MESSAGE;
-import static ie.dcu.easyorderfyp.Utilities.SENDER_ID;
+import static ie.dcu.easyorderfyp.GCMServerUtilities.DISPLAY_MESSAGE_ACTION;
+import static ie.dcu.easyorderfyp.GCMServerUtilities.EXTRA_MESSAGE;
+import static ie.dcu.easyorderfyp.GCMServerUtilities.SENDER_ID;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,11 +25,11 @@ public class RegisterActivity extends Activity {
 		AlertDialogManager alert = new AlertDialogManager();
 		
 		// Variables for Login Data
-		public static int user_id;
-		public static String username;
-		public static String password;
+		private static int user_id;
+		private static String username;
+		private static String password;
 		
-		public static boolean isRegistered = false;
+		static boolean isRegistered = false;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class RegisterActivity extends Activity {
 						protected Void doInBackground(Void... params) {
 							// Register on our server
 							// On server creates a new user
-							ServerUtilities.register(context, username, password, regId);
+							GCMServerUtilities.register(context, username, password, regId);
 							return null;
 						}
 

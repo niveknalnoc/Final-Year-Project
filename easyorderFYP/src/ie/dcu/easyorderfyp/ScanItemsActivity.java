@@ -1,6 +1,6 @@
 package ie.dcu.easyorderfyp;
 
-import static ie.dcu.easyorderfyp.Utilities.URL_SUBMIT_ORDER;
+import static ie.dcu.easyorderfyp.ServerUtilities.URL_SUBMIT_ORDER;
 import ie.dcu.easyorderfyp.QuantityDialog.QuanityChangeListener;
 
 import java.util.ArrayList;
@@ -38,10 +38,11 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	private String codeContents;
 	private String tableNumber;
 	private int user_id;
+	
+	private boolean basketEmpty = true;
 
 	// arraylist to hold the menu, itemsScaned and the order
-	private ArrayList<MenuItem> menu;
-	private ArrayList<MenuItem> scannedItems;
+	private List<MenuItem> menu;
 	
 	final Activity returnActivity = this;
 	
@@ -65,7 +66,6 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 		
 		webCall = new WebCallService();
 		alert = new AlertDialogManager();
-		scannedItems = new ArrayList<MenuItem>();
 		menu = new ArrayList<MenuItem>();
 		
 		Bundle b = this.getIntent().getExtras();
@@ -117,6 +117,10 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	protected void onResume() {
 		super.onResume();
 		
+		for(int i = 0 ; i < menu.size() ; i++){
+			System.out.println("ITEMS IN MENU : " + menu.get(i).getItemName());
+		}
+		
 		// parse scanned code
 		if (thisRequestCode == 49374) {
             if (thisResultCode == -1) { 
@@ -126,6 +130,10 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	         	if(isValid){
 	         		if(menu.contains(item)) {
 		         		// order matches the menu on the db, add to order arraylist
+	         			System.out.println("xx" + item.getItemId());
+	         			System.out.println("xx" + item.getItemName());
+	         			System.out.println("xx " + item.getPrice());
+	         			basketEmpty = false;
 		         		addItemToOrder(item);
 		         	}else{
 		         		//menu does not contain this item, let customer know
@@ -140,14 +148,13 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	         	}
             }
 		}
-		
 	}
 	
 	/**
 	 * check that the input is a valid menu item
 	 */
 	private boolean validateInput(MenuItem item){
-		if(item.getItemId() == null || item.getItemName() == null || item.getAvailable() == 3 || item.getPrice() == 0.00)
+		if(item.getItemId() == null || item.getItemName() == null || item.getPrice() == 0.00)
 		return false;
 		else
 		return true;
@@ -158,7 +165,6 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	 */
 	private void addItemToOrder(MenuItem item) {
 		OrderListAdapter adapter = (OrderListAdapter) mOrderListView.getAdapter();
-		scannedItems.add(item);
 		adapter.addOrderItem(item);
 	}
 	
@@ -166,7 +172,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	 * Submit the order
 	 */
 	private void submitOrder() {
-		if(scannedItems.size() != 0) {
+		if(basketEmpty == false) {
 			new SubmitOrder().execute();
 		}else{
 			alert.showAlertDialog(ScanItemsActivity.this,
@@ -204,7 +210,6 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 		String setId = null;
 		String setItemName = null;
 		Double setPrice = null;
-		int setAvailable = 3;
 		String temp;
 		
 		for(int i = 0 ; i < codeContents.length() ; i++) {
@@ -220,7 +225,6 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 					nameSet = true;
 				}else if(priceSet != true) {
 					setPrice = Double.parseDouble(temp);
-					setAvailable = Integer.parseInt(codeContents.substring(startCount));
 					priceSet = true;
 				}
 			}else{
@@ -228,9 +232,9 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 			}
 		}
 		if(!idSet || !nameSet || !priceSet)
-			return new MenuItem(null, null, 0.00,'3');
+			return new MenuItem(null, null, 0.00);
 		else
-			return new MenuItem(setId, setItemName, setPrice, setAvailable);
+			return new MenuItem(setId, setItemName, setPrice);
 	}
 	
 	public void newQuantity(int index, int quan) {
@@ -262,7 +266,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 			String orderString = "";
 			try {
 				orderString = adapter.getOrderString();
-				System.out.println(orderString);
+				System.out.println("orderString : " + orderString);
 			} catch(Exception e) {
 				alert.showAlertDialog(ScanItemsActivity.this,
 						"No items in basket	",

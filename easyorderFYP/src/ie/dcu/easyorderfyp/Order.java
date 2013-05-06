@@ -9,14 +9,16 @@ public class Order implements Parcelable{
 	String item_id;
 	String item_name;
 	int item_quantity;
+	double item_price;
 	String date;
 	
-	public Order(int a, String b, String c, int d, String e) {
+	public Order(int a, String b, String c, int d, double e, String f) {
 		table_num = a;
 		item_id = b;
 		item_name = c;
 		item_quantity = d;
-		date = e;
+		item_price = e;
+		date = f;
 	}
 	
 	Order()
@@ -42,16 +44,24 @@ public class Order implements Parcelable{
 		return item_id;
 	}
 	
-	public void setId(String ID) {
-		 this.item_id = ID;
+	public void setId(String id) {
+		 this.item_id = id;
 	}
 	
 	public int getQuantity() {
 		return item_quantity;
 	}
 	
-	public void setQuantity(int Quantity) {
-		 this.item_quantity = Quantity;
+	public void setQuantity(int quantity) {
+		 this.item_quantity = quantity;
+	}
+	
+	public double getPrice() {
+		return item_price;
+	}
+	
+	public void setPrice(double price) {
+		 this.item_price = price;
 	}
 	
 	public int getTableNum() {
@@ -74,6 +84,7 @@ public class Order implements Parcelable{
         item_id = in.readString();
         item_name = in.readString();
         item_quantity = in.readInt();
+        item_price = in.readDouble();
         // Continue doing this for the rest of your member data
     }
 
@@ -84,6 +95,7 @@ public class Order implements Parcelable{
 		dest.writeString(item_id);
 		dest.writeString(item_name);
 		dest.writeInt(item_quantity);
+		dest.writeDouble(item_price);
 		dest.writeString(date);
 	}
 	

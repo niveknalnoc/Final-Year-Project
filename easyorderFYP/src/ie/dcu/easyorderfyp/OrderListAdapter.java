@@ -138,6 +138,8 @@ public class OrderListAdapter extends ArrayAdapter<MenuItem> {
 			order += data.get(i).getItemName();
 			order += ":";
 			order += quantities.get(i);
+			order += ":";
+			order += data.get(i).getPrice();
 			order += ",";
 		}
 		

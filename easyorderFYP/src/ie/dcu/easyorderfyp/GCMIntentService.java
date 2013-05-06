@@ -1,7 +1,7 @@
 package ie.dcu.easyorderfyp;
 
-import static ie.dcu.easyorderfyp.Utilities.SENDER_ID;
-import static ie.dcu.easyorderfyp.Utilities.displayMessage;
+import static ie.dcu.easyorderfyp.GCMServerUtilities.SENDER_ID;
+import static ie.dcu.easyorderfyp.GCMServerUtilities.displayMessage;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -25,7 +25,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         displayMessage(context, "Your device registred with GCM");
-        ServerUtilities.register(context, MainActivity.username, MainActivity.password, registrationId);
+        GCMServerUtilities.register(context, LoginActivity.username, LoginActivity.password, registrationId);
     }
 
     /**
@@ -35,7 +35,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
         displayMessage(context, getString(R.string.gcm_unregistered));
-        ServerUtilities.unregister(context, registrationId);
+        GCMServerUtilities.unregister(context, registrationId);
     }
 
     /**
@@ -84,7 +84,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         
         String title = context.getString(R.string.app_name);
         
-        Intent notificationIntent = new Intent(context, MainActivity.class);
+        Intent notificationIntent = new Intent(context, LoginActivity.class);
         // set intent so it does not start a new activity
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);

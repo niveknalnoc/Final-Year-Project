@@ -1,8 +1,8 @@
 package ie.dcu.easyorderfyp;
 
-import static ie.dcu.easyorderfyp.Utilities.REGISTER_SERVER_URL;
-import static ie.dcu.easyorderfyp.Utilities.SENDER_ID;
-import static ie.dcu.easyorderfyp.Utilities.UNREGISTER_SERVER_URL;
+import static ie.dcu.easyorderfyp.ServerUtilities.REGISTER_SERVER_URL;
+import static ie.dcu.easyorderfyp.GCMServerUtilities.SENDER_ID;
+import static ie.dcu.easyorderfyp.ServerUtilities.UNREGISTER_SERVER_URL;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,9 +23,9 @@ public class LoggedInActivity extends Activity {
 	private Button btnPrevOrders;
 	
 	// Variables for Login Data
-	public static int user_id;
-	public static String username;
-	public static String password;
+	private static int user_id;
+	private static String username;
+	private static String password;
 	
 	// Current user details
 	User current_user;
@@ -49,8 +49,10 @@ public class LoggedInActivity extends Activity {
 		System.out.println("user_id LoggedInActivity : " + user_id);
 	}
 	
+	@Override
 	public void onBackPressed() {
-    }   
+    
+	}   
 	
 	private void resetSharedPreferences(){
 		
@@ -123,7 +125,7 @@ public class LoggedInActivity extends Activity {
 				// Remove user login data from SharedPreferences
 				resetSharedPreferences();
 				// Bring the user back to the main screen
-				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				Intent i = new Intent(getApplicationContext(), LoginActivity.class);
 				startActivity(i);
 			}
 		});

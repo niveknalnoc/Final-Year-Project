@@ -98,7 +98,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="ie.dcu.easyorderfyp.MainActivity"
+            android:name="ie.dcu.easyorderfyp.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>

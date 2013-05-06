@@ -22,7 +22,7 @@ import static ie.dcu.easyorderfyp.RegisterActivity.isRegistered;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import static ie.dcu.easyorderfyp.Utilities.URL_DOWNLOAD_MENU;
+import static ie.dcu.easyorderfyp.ServerUtilities.URL_DOWNLOAD_MENU;
 
 public class TableLocator extends Activity {
 	
@@ -57,8 +57,8 @@ public class TableLocator extends Activity {
 	private TextView tvDineOption;
 	
 	// Variables for Login Data
-	public static int user_id;
-	public static String username;
+	private static int user_id;
+	private static String username;
 	
 	// no_iems_error_flag is set if no items found , return_flag is set to escape activity back to main menu
 	private boolean no_items_error_flag = false;
@@ -222,10 +222,9 @@ public class TableLocator extends Activity {
                         String item_id = c.getString(TAG_ID);
                         String item_name = c.getString(TAG_ITEM_NAME);
                         Double item_price = c.getDouble(TAG_PRICE);
-                        int item_available = c.getInt(TAG_AVAILABLE);
  
                         // storing menu items object in arraylist
-                        downloadedMenuItems.add(new MenuItem(item_id,item_name,item_price,item_available));
+                        downloadedMenuItems.add(new MenuItem(item_id,item_name,item_price));
                     }
                 } else {
                     // no menu items found - set flag
@@ -248,14 +247,14 @@ public class TableLocator extends Activity {
             runOnUiThread(new Runnable() {
                 public void run() {
                 	if(no_items_error_flag == true) {
-                		Intent error = new Intent(getApplicationContext(), EasyOrderERROR.class);
-                		startActivity(error);
+                		Intent i = new Intent(getApplicationContext(), EasyOrderERROR.class);
+                		startActivity(i);
                 	}else {
-                		Intent scanItemsIntent = new Intent(getApplicationContext(), ScanItemsActivity.class);
-                		scanItemsIntent.putExtra("tableNumber", codeContents.substring(1));
-                		scanItemsIntent.putExtra("user_id", user_id);
-                		scanItemsIntent.putParcelableArrayListExtra ("downloadedMenuItems", downloadedMenuItems);
-                		startActivity(scanItemsIntent);
+                		Intent i = new Intent(getApplicationContext(), ScanItemsActivity.class);
+                		i.putExtra("tableNumber", codeContents.substring(1));
+                		i.putExtra("user_id", user_id);
+                		i.putParcelableArrayListExtra ("downloadedMenuItems", downloadedMenuItems);
+                		startActivity(i);
                 	}
                 }
             });
@@ -263,9 +262,4 @@ public class TableLocator extends Activity {
         }	
     }
     
-    /*public void onBackPressed() {
-		//if back button pressed as does user want to logout
-        
-    } */ 
-
 }

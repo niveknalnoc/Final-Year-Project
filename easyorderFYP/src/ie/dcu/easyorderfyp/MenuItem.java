@@ -8,13 +8,11 @@ public class MenuItem implements Parcelable{
 	String itemId;
 	String itemName;
 	double price;
-	int available;
 	
-	public MenuItem(String a, String b, double c, int d) {
+	public MenuItem(String a, String b, double c) {
 		itemId = a;
 		itemName = b;
 		price = c;
-		available = d;
 	}
 	
 	MenuItem()
@@ -44,14 +42,6 @@ public class MenuItem implements Parcelable{
 		 this.price = Price;
 	}
 	
-	public int getAvailable() {
-		return available;
-	}
-
-	public void setAvailable(int Available) {
-		 this.available = Available;
-	}
-
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
@@ -63,7 +53,6 @@ public class MenuItem implements Parcelable{
 		itemId = in.readString();
         itemName = in.readString();
         price = in.readDouble();
-        available = in.readInt();
         // Continue doing this for the rest of your member data
     }
 
@@ -73,7 +62,6 @@ public class MenuItem implements Parcelable{
 		dest.writeString(itemId);
 		dest.writeString(itemName);
 		dest.writeDouble(price);
-		dest.writeInt(available);
 	}
 	
 	public static final Parcelable.Creator<MenuItem> CREATOR

@@ -1,7 +1,7 @@
 package ie.dcu.easyorderfyp;
 
-import static ie.dcu.easyorderfyp.Utilities.URL_GET_USER;
-import static ie.dcu.easyorderfyp.Utilities.URL_REGISTER_USER;
+import static ie.dcu.easyorderfyp.ServerUtilities.URL_GET_USER;
+import static ie.dcu.easyorderfyp.ServerUtilities.URL_REGISTER_USER;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +26,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class LoginActivity extends Activity {
 	
 	// Buttons for logging in and registering
 	private Button btnLogin;
 	private Button btnRegister;
 	
 	// Variables for Login Data
-	public static String username;
-	public static String password;
-	public static int user_id;
-	public static boolean isLoggedIn;
+	static String username;
+	static String password;
+	private static int user_id;
+	private static boolean isLoggedIn;
 	
 	// EditText
 	private EditText txtUsername;
@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
     	// Check if Internet present
     	if (!cd.isConnectingToInternet()) {
     		// Internet Connection is not present
-    		alert.showAlertDialog(MainActivity.this,
+    		alert.showAlertDialog(LoginActivity.this,
     				"Internet Connection Error",
     				"Please connect to WiFi or 3g to use EasyOrder", false);
     	}
@@ -152,7 +152,7 @@ public class MainActivity extends Activity {
 		    			new LoadAllUsers().execute();
 		    			
 		    		}else{
-		    			alert.showAlertDialog(MainActivity.this, "Registration Error!", "Please enter your details", false);
+		    			alert.showAlertDialog(LoginActivity.this, "Registration Error!", "Please enter your details", false);
 		    		}
 		    	}
 		    });
@@ -176,7 +176,7 @@ public class MainActivity extends Activity {
 		    			Log.d("REGISTER","REGISTER");
 		    			new LoadAllUsers().execute();
 		    		}else{
-		    			alert.showAlertDialog(MainActivity.this, "Registration Error!", "Please enter your details", false);
+		    			alert.showAlertDialog(LoginActivity.this, "Registration Error!", "Please enter your details", false);
 		    		}
 		    	}
 		    });
@@ -193,7 +193,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setTitle("Connecting to Server! ");
             pDialog.setMessage("Checking Username and Password...");
             pDialog.setIndeterminate(false);
@@ -278,7 +278,6 @@ public class MainActivity extends Activity {
                     }
                 }
             });
- 
         }	
     }
     
@@ -302,12 +301,12 @@ public class MainActivity extends Activity {
 
 		};
 		
-		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 		builder.setTitle(this_user.getUserName());
 		builder.setMessage("User not found... What would you like to do?");
 		builder.setPositiveButton("Register", dialogClickListener);
 		builder.setNegativeButton("Enter Details Again", dialogClickListener).show();
-	}// end splashMenufavourites
+	}// end userNotFoundSplashScreen
     
     void registerUser() {
 
@@ -379,7 +378,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setTitle("Registering New user! ");
             pDialog.setMessage("Creating Username and Password...");
             pDialog.setIndeterminate(false);
