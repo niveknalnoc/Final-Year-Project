@@ -51,7 +51,7 @@ public class LoggedInActivity extends Activity {
 	
 	@Override
 	public void onBackPressed() {
-    
+		//do nothing
 	}   
 	
 	private void resetSharedPreferences(){

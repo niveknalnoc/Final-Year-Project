@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:text="@string/table_number"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_margin="10dp"
         android:text="@string/scan_item" />
 
     <Button
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/logo"
+        android:layout_margin="10dp"
         android:text="@string/submit_order" />
 
     <LinearLayout
@@ -54,7 +56,7 @@
         <ListView
             android:id="@+id/order_list"
             android:layout_width="match_parent"
-            android:layout_height="307dp" >
+            android:layout_height="268dp" >
         </ListView>
     </LinearLayout>
 

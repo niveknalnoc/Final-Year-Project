@@ -3,6 +3,8 @@ package ie.dcu.easyorderfyp;
 import static ie.dcu.easyorderfyp.ServerUtilities.URL_GET_USER;
 import static ie.dcu.easyorderfyp.ServerUtilities.URL_REGISTER_USER;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +48,10 @@ public class LoginActivity extends Activity {
 	private static User this_user;
 	
 	// Boolean for no users found - error flag
-	private static boolean user_found = false;
+	private static boolean user_found;
 	
 	// Boolean for fatal error - cannot create user
-	private static boolean user_created = false;
+	private static boolean user_created;
 	
 	// Boolean for no users returned from http post request
 	//private boolean no_users_located = false;
@@ -119,6 +121,10 @@ public class LoginActivity extends Activity {
 		super.onResume();
 		setContentView(R.layout.activity_login);
 		
+		user_found = false;
+		user_created = false;
+		BUTTONPRESSED = null;
+		
 		getSharedPref();
     	
     	if(isLoggedIn == true){
@@ -140,16 +146,17 @@ public class LoginActivity extends Activity {
 		    		
 		    		// Check if user filled the form
 		    		username = txtUsername.getText().toString().toLowerCase();
-		    		password = txtPassword.getText().toString().toLowerCase();
-
-		    		if(username.length() > 0 && password.length() > 0){
+		    		String password_plain = txtPassword.getText().toString().toLowerCase();
+		    		
+		    		if(username.length() > 0 && password_plain.length() > 0){
+		    			password = hash(password_plain);
 		    			// call to server to identify if user is a registered user
 		    			this_user = new User(00, username, password);
 		    			// Loading users in Background Thread
 		    			// required to check if user is already registered
 		    			BUTTONPRESSED = LOGIN;
 		    			Log.d("LOGIN","LOGIN");
-		    			new LoadAllUsers().execute();
+		    			new LoadUser().execute();
 		    			
 		    		}else{
 		    			alert.showAlertDialog(LoginActivity.this, "Registration Error!", "Please enter your details", false);
@@ -165,16 +172,17 @@ public class LoginActivity extends Activity {
 		    		
 		    		// Check if user filled the form
 		    		username = txtUsername.getText().toString().toLowerCase();
-		    		password = txtPassword.getText().toString().toLowerCase();
+		    		String password_plain = txtPassword.getText().toString().toLowerCase();
 
-		    		if(username.length() > 0 && password.length() > 0){
+		    		if(username.length() > 0 && password_plain.length() > 0){
+		    			password = hash(password_plain);
 		    			// call to server to identify if user is a registered user
 		    			this_user = new User(00, username, password);
 		    			// Loading users in Background Thread
 		    			// required to check if user is already registered
 		    			BUTTONPRESSED = REGISTER;
 		    			Log.d("REGISTER","REGISTER");
-		    			new LoadAllUsers().execute();
+		    			new LoadUser().execute();
 		    		}else{
 		    			alert.showAlertDialog(LoginActivity.this, "Registration Error!", "Please enter your details", false);
 		    		}
@@ -185,7 +193,7 @@ public class LoginActivity extends Activity {
 	/**
      * Background Async Task to Load all product by making HTTP Request
      * */
-    class LoadAllUsers extends AsyncTask<String, String, String> {
+    class LoadUser extends AsyncTask<String, String, String> {
  
         /**
          * Before starting background thread Show Progress Dialog
@@ -264,7 +272,7 @@ public class LoginActivity extends Activity {
             runOnUiThread(new Runnable() {
                 public void run() {
 
-                    if(user_found == true){
+                    if(user_found == true && BUTTONPRESSED.equals(LOGIN)){
                     	//login
                     	logUserIn();
                     }else{
@@ -310,11 +318,43 @@ public class LoginActivity extends Activity {
     
     void registerUser() {
 
-    	Toast.makeText(getApplicationContext(), username + 
-    			" you are a new user! Welcome - creating your login details now...", 
-           			Toast.LENGTH_LONG).show();
-    	new CreateNewUser().execute();
+    	if(user_created == true){
+    		Toast.makeText(getApplicationContext(), username + 
+        			" you are a new user! Welcome - creating your login details now...", 
+               			Toast.LENGTH_LONG).show();
+    	}
     	
+    	new CreateNewUser().execute();
+    }
+    
+    //hash users password
+    private String hash(String pw){
+    	
+    	String h_pw = null;
+    	
+    	// Byte array containing the key s
+		byte byteData[] = pw.getBytes();
+		// SHA-256 digest created from key s (1024 bit -> 256 bit)
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(byteData); 
+			// Create the byte arrays to hold the key and plaintext
+			byte byteDataHash[] = md.digest();
+			//convert the byte to hex format
+			StringBuffer sb = new StringBuffer();
+			
+			for (int i = 0; i < byteDataHash.length; i++) {
+				sb.append(Integer.toString((byteDataHash[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			h_pw = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+        
+        System.out.println("HASH : " + h_pw);
+        
+    	return h_pw;
     }
     
     void logUserIn() {
@@ -438,15 +478,22 @@ public class LoginActivity extends Activity {
                 		// user registered successfully
                 		Toast.makeText(getApplicationContext(), username + " has been registered", Toast.LENGTH_LONG).show();
                 		// call LoadAllUsers to get the users id and to confirm user is fully created
-                		new LoadAllUsers().execute();
+                		BUTTONPRESSED = LOGIN;
+                		new LoadUser().execute();
                 	}else if(user_created == false) {
-                		Intent i = new Intent(getApplicationContext(), EasyOrderERROR.class);
-                		startActivity(i);
+                		Toast.makeText(getApplicationContext(), username + " is not available...", Toast.LENGTH_LONG).show();
+                		//Intent i = new Intent(getApplicationContext(), EasyOrderERROR.class);
+                		//startActivity(i);
                 	}
                 }
             });
  
         }	
     }
+    
+    @Override
+	public void onBackPressed() {
+    	//do nothing
+	} 
     
 }
