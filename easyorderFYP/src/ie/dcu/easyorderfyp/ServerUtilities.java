@@ -8,7 +8,7 @@ public class ServerUtilities {
      * 
      */
 	
-	// GCM registration url
+	/*// GCM registration url
     static final String REGISTER_SERVER_URL = "http://192.168.1.12/easyorder_server/register.php"; 
     // GCM unregister url
     static final String UNREGISTER_SERVER_URL = "http://192.168.1.12/easyorder_server/unregister.php"; 
@@ -21,14 +21,14 @@ public class ServerUtilities {
     // url to get users
     static final String URL_GET_USER = "http://192.168.1.12/easyorder_server/get_users.php";
     // url to get users orders
-    static final String URL_GET_USERS_ORDERS = "http://192.168.1.12/easyorder_server/get_transactions.php"; 
+    static final String URL_GET_USERS_ORDERS = "http://192.168.1.12/easyorder_server/get_transactions.php"; */
 	
     /**
      * 
      *  URL GROUP FOR TESTING WITHIN DCU 
      * 
      */
-   /* 
+   
     // GCM registration url
     static final String REGISTER_SERVER_URL = "http://136.206.94.243/easyorder_server/register.php"; 
     // GCM unregister url
@@ -42,6 +42,6 @@ public class ServerUtilities {
     // url to get users
     static final String URL_GET_USER = "http://136.206.94.243/easyorder_server/get_users.php";
     // url to get users orders
-    static final String URL_GET_USERS_ORDERS = "http://136.206.94.243/easyorder_server/get_transactions.php";*/
+    static final String URL_GET_USERS_ORDERS = "http://136.206.94.243/easyorder_server/get_transactions.php";
 
 }

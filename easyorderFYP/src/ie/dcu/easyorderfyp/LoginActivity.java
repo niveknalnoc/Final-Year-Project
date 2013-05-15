@@ -352,8 +352,6 @@ public class LoginActivity extends Activity {
 			e.printStackTrace();
 		}
         
-        System.out.println("HASH : " + h_pw);
-        
     	return h_pw;
     }
     

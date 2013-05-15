@@ -34,7 +34,7 @@ public class GCMServerUtilities {
      *
      */
     static void register(final Context context, String name, String user_pin, final String regId) {
-        
+        System.out.println("here here here:");
     	String serverUrl = REGISTER_SERVER_URL;
         Map<String, String> params = new HashMap<String, String>();
         params.put("gcm_regid", regId);
