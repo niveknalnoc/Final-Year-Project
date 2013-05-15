@@ -3,6 +3,9 @@ package ie.dcu.easyorderfyp;
 import static ie.dcu.easyorderfyp.ServerUtilities.REGISTER_SERVER_URL;
 import static ie.dcu.easyorderfyp.GCMServerUtilities.SENDER_ID;
 import static ie.dcu.easyorderfyp.ServerUtilities.UNREGISTER_SERVER_URL;
+
+import com.google.android.gcm.GCMRegistrar;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,7 +49,6 @@ public class LoggedInActivity extends Activity {
 		password = current_user.getPassword();
 		user_id = current_user.getUserId();
 		
-		System.out.println("user_id LoggedInActivity : " + user_id);
 	}
 	
 	@Override
@@ -82,7 +84,6 @@ public class LoggedInActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				Intent i = new Intent(getApplicationContext(), TableLocator.class);
-				i.putExtra("username", username);
 				i.putExtra("user_id", user_id);
 				startActivity(i);
 			}
@@ -109,7 +110,6 @@ public class LoggedInActivity extends Activity {
 				// Sending registration details to MainActivity
 				i.putExtra("username", username);
 				i.putExtra("password", password);
-				System.out.println("user_id button Take Away : " + user_id);
 				i.putExtra("user_id", user_id);
 				startActivity(i);
 				finish();
@@ -130,7 +130,7 @@ public class LoggedInActivity extends Activity {
 			}
 		});
 		
-		// eat in click event
+		// previous orders click event
 		btnPrevOrders.setOnClickListener(new View.OnClickListener() {
 						 
 			@Override

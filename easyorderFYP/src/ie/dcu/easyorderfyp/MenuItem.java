@@ -5,12 +5,12 @@ import android.os.Parcelable;
 
 public class MenuItem implements Parcelable{
 
-	String itemId;
+	String itemIdentifier;
 	String itemName;
 	double price;
 	
 	public MenuItem(String a, String b, double c) {
-		itemId = a;
+		itemIdentifier = a;
 		itemName = b;
 		price = c;
 	}
@@ -26,12 +26,12 @@ public class MenuItem implements Parcelable{
 		 this.itemName = item_name;
 	}
 	
-	public String getItemId() {
-		return itemId;
+	public String getItemIdentifier() {
+		return itemIdentifier;
 	}
 	
 	public void setId(String ID) {
-		 this.itemId = ID;
+		 this.itemIdentifier = ID;
 	}
 	
 	public double getPrice() {
@@ -50,7 +50,7 @@ public class MenuItem implements Parcelable{
 	
 	private MenuItem(Parcel in) {
         // This order must match the order in writeToParcel()
-		itemId = in.readString();
+		itemIdentifier = in.readString();
         itemName = in.readString();
         price = in.readDouble();
         // Continue doing this for the rest of your member data
@@ -59,7 +59,7 @@ public class MenuItem implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		// TODO Auto-generated method stub
-		dest.writeString(itemId);
+		dest.writeString(itemIdentifier);
 		dest.writeString(itemName);
 		dest.writeDouble(price);
 	}
@@ -82,7 +82,7 @@ public class MenuItem implements Parcelable{
     public boolean equals(Object o) {
 		MenuItem m = (MenuItem)o;
 		
-		if(!m.itemId.equals(itemId)) {
+		if(!m.itemIdentifier.equals(itemIdentifier)) {
 			return false;
 		}
 		return true;

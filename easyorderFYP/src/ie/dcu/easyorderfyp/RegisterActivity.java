@@ -29,7 +29,7 @@ public class RegisterActivity extends Activity {
 		private static String username;
 		private static String password;
 		
-		static boolean isRegistered = false;
+		public static boolean isRegistered = false;
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {

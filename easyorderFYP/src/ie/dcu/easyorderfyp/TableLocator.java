@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import static ie.dcu.easyorderfyp.RegisterActivity.isRegistered;
+
+import com.google.android.gcm.GCMRegistrar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -41,10 +43,9 @@ public class TableLocator extends Activity {
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PRODUCTS = "items";
-    private static final String TAG_ID = "item_id";
+    private static final String TAG_ID = "item_identifier";
     private static final String TAG_ITEM_NAME = "item_name";
     private static final String TAG_PRICE = "price";
-    private static final String TAG_AVAILABLE = "available";
  
     // Products JSONArray
     JSONArray items = null;
@@ -58,7 +59,6 @@ public class TableLocator extends Activity {
 	
 	// Variables for Login Data
 	private static int user_id;
-	private static String username;
 	
 	// no_iems_error_flag is set if no items found , return_flag is set to escape activity back to main menu
 	private boolean no_items_error_flag = false;
@@ -92,10 +92,7 @@ public class TableLocator extends Activity {
 		
 		Bundle b = this.getIntent().getExtras();
 		user_id = b.getInt("user_id");
-		username = b.getString("username");
 		
-		System.out.println(user_id);
-
 		// Check if Internet present
 		if (!cd.isConnectingToInternet()) {
 			// Internet Connection is not present
@@ -219,12 +216,15 @@ public class TableLocator extends Activity {
                         JSONObject c = items.getJSONObject(i);
  
                         // storing each json item in variable
-                        String item_id = c.getString(TAG_ID);
+                        String item_identifier = c.getString(TAG_ID);
                         String item_name = c.getString(TAG_ITEM_NAME);
                         Double item_price = c.getDouble(TAG_PRICE);
  
+                        Log.d("ITEMS IN DB", item_identifier);
+                        Log.d("ITEMS IN DB", item_name);
+                        
                         // storing menu items object in arraylist
-                        downloadedMenuItems.add(new MenuItem(item_id,item_name,item_price));
+                        downloadedMenuItems.add(new MenuItem(item_identifier,item_name,item_price));
                     }
                 } else {
                     // no menu items found - set flag
@@ -262,4 +262,13 @@ public class TableLocator extends Activity {
         }	
     }
     
+    @Override
+	public void onBackPressed() {
+    	if(isRegistered == true){
+			GCMRegistrar.unregister(this);
+			isRegistered = false;
+		}
+		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+		startActivity(i);
+	}
 }

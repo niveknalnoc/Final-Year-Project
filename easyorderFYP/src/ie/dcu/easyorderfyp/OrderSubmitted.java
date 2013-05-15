@@ -1,6 +1,7 @@
 package ie.dcu.easyorderfyp;
 
 import static ie.dcu.easyorderfyp.RegisterActivity.isRegistered;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,10 +15,12 @@ public class OrderSubmitted extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_order_submitted);
 		
 		if(isRegistered == true){
+			setContentView(R.layout.activity_order_submitted_tw);
 			unregisterAlert();
+		}else{
+			setContentView(R.layout.activity_order_submitted);
 		}
 		
 	}
@@ -46,7 +49,10 @@ public class OrderSubmitted extends Activity {
 	
 	@Override
 	public void onBackPressed() {
-		GCMRegistrar.unregister(this);
+		if(isRegistered == true){
+			GCMRegistrar.unregister(this);
+			isRegistered = false;
+		}
 		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
 		startActivity(i);
 	}

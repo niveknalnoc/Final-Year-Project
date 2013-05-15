@@ -1,5 +1,6 @@
 package ie.dcu.easyorderfyp;
 
+import static ie.dcu.easyorderfyp.RegisterActivity.isRegistered;
 import static ie.dcu.easyorderfyp.ServerUtilities.URL_SUBMIT_ORDER;
 import ie.dcu.easyorderfyp.QuantityDialog.QuanityChangeListener;
 
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -116,11 +118,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		for(int i = 0 ; i < menu.size() ; i++){
-			System.out.println("ITEMS IN MENU : " + menu.get(i).getItemName());
-		}
-		
+
 		// parse scanned code
 		if (thisRequestCode == 49374) {
             if (thisResultCode == -1) { 
@@ -130,7 +128,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	         	if(isValid){
 	         		if(menu.contains(item)) {
 		         		// order matches the menu on the db, add to order arraylist
-	         			System.out.println("xx" + item.getItemId());
+	         			System.out.println("xx" + item.getItemIdentifier());
 	         			System.out.println("xx" + item.getItemName());
 	         			System.out.println("xx " + item.getPrice());
 	         			basketEmpty = false;
@@ -154,7 +152,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	 * check that the input is a valid menu item
 	 */
 	private boolean validateInput(MenuItem item){
-		if(item.getItemId() == null || item.getItemName() == null || item.getPrice() == 0.00)
+		if(item.getItemIdentifier() == null || item.getItemName() == null || item.getPrice() == 0.00)
 		return false;
 		else
 		return true;
@@ -290,7 +288,9 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
             // check for success tag
             try {
                 int success = json.getInt(TAG_SUCCESS);
- 
+
+                System.out.println("SUCCESS VALUE : " + success );
+                
                 if (success == 1) {
                     // successfully submitted order
                 	orderSubmitted();
@@ -298,7 +298,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
                     finish();
                 } else {
                     // failed to create product
-                	Log.d("NOT SUBMITTED!!!", "");
+                	Log.d("ORDER OK? ", "NOT SUBMITTED!!!");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -315,5 +315,15 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 			super.onPostExecute(result);
 			pDialog.dismiss();
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(isRegistered == true){
+			GCMRegistrar.unregister(this);
+			isRegistered = false;
+		}
+		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+		startActivity(i);
 	}
 }
