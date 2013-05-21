@@ -38,7 +38,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	private int thisRequestCode;
 	private int thisResultCode;
 	private String codeContents;
-	private String tableNumber;
+	private int tableNumber;
 	private int user_id;
 	
 	private boolean basketEmpty = true;
@@ -71,7 +71,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 		menu = new ArrayList<MenuItem>();
 		
 		Bundle b = this.getIntent().getExtras();
-		tableNumber = b.getString("tableNumber");
+		tableNumber = b.getInt("tableNumber");
 		user_id = b.getInt("user_id");
 		menu = getIntent().getParcelableArrayListExtra("downloadedMenuItems");
 		
@@ -79,7 +79,10 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 		
 		// display table number at the top of the screen
 		tvTableNum = (TextView) findViewById(R.id.txtTableNumber);
-		tvTableNum.setText("Order For Table: " + tableNumber);
+		if(tableNumber != 0)
+			tvTableNum.setText("Order For Table: " + tableNumber);
+		else
+			tvTableNum.setText("Take Away Order");
 		
 		// order list containing scanned items
         mOrderListView = (ListView) findViewById(R.id.order_list);
@@ -128,9 +131,6 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 	         	if(isValid){
 	         		if(menu.contains(item)) {
 		         		// order matches the menu on the db, add to order arraylist
-	         			System.out.println("xx" + item.getItemIdentifier());
-	         			System.out.println("xx" + item.getItemName());
-	         			System.out.println("xx " + item.getPrice());
 	         			basketEmpty = false;
 		         		addItemToOrder(item);
 		         	}else{
@@ -274,7 +274,7 @@ public class ScanItemsActivity extends FragmentActivity implements QuanityChange
 			
 			System.out.println("Integer.toString(user_id) : " + Integer.toString(user_id));
 			List<NameValuePair> param = new ArrayList<NameValuePair>();
-	        param.add(new BasicNameValuePair("table", tableNumber));
+	        param.add(new BasicNameValuePair("table", Integer.toString(tableNumber)));
 	        param.add(new BasicNameValuePair("user_id", Integer.toString(user_id)));
 	        param.add(new BasicNameValuePair("order_string", orderString));
 	        

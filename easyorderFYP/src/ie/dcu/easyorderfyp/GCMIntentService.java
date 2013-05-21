@@ -44,7 +44,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onMessage(Context context, Intent intent) {
         Log.i(TAG, "Received message");
-        String message = intent.getExtras().getString("price");
+        String message = intent.getExtras().getString("message");
         
         displayMessage(context, message);
         // notifies user

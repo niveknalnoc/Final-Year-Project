@@ -54,6 +54,7 @@ public class TableLocator extends Activity {
 	private int thisRequestCode;
 	private int thisResultCode;
 	private String codeContents;
+	private int tableNumber;
 	
 	private TextView tvDineOption;
 	
@@ -156,16 +157,19 @@ public class TableLocator extends Activity {
 		boolean validator = false;
 		String firstToken = codeContents.substring(0, 1);
 		// check valid code scanned [char followed by an int]
-		if(firstToken.equals("T") && codeContents.length() > 1) {
+		if(codeContents.equals("TA")){
+			tableNumber = 0;
+			validator = true;
+		}else if(firstToken.equals("T") && codeContents.length() > 1) {
 			try{
-				int tableNumber = Integer.parseInt(codeContents.substring(1));
+				tableNumber = Integer.parseInt(codeContents.substring(1));
 				if(tableNumber > 0)
-				validator = true;
+					validator = true;
 				else
 					validator = false;
 			}catch(NumberFormatException e){
 			}
-		}
+		} 
 		return validator;
 	}
 	
@@ -251,7 +255,7 @@ public class TableLocator extends Activity {
                 		startActivity(i);
                 	}else {
                 		Intent i = new Intent(getApplicationContext(), ScanItemsActivity.class);
-                		i.putExtra("tableNumber", codeContents.substring(1));
+                		i.putExtra("tableNumber", tableNumber);
                 		i.putExtra("user_id", user_id);
                 		i.putParcelableArrayListExtra ("downloadedMenuItems", downloadedMenuItems);
                 		startActivity(i);

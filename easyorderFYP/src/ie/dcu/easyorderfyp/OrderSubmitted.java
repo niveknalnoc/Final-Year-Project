@@ -49,11 +49,30 @@ public class OrderSubmitted extends Activity {
 	
 	@Override
 	public void onBackPressed() {
+		super.onBackPressed();
 		if(isRegistered == true){
 			GCMRegistrar.unregister(this);
 			isRegistered = false;
 		}
 		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
 		startActivity(i);
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if(isRegistered == true){
+			GCMRegistrar.unregister(this);
+			isRegistered = false;
+		}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		if(isRegistered == true){
+			GCMRegistrar.unregister(this);
+			isRegistered = false;
+		}
 	}
 }
