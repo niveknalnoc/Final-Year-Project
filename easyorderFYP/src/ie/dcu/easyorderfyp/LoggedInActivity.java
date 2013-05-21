@@ -143,4 +143,9 @@ public class LoggedInActivity extends Activity {
 		});
 		
 	}
+	
+	@Override
+	protected void onDestroy(){
+		super.onDestroy();
+	}
 }

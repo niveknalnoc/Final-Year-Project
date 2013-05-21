@@ -50,6 +50,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
-        android:src="@drawable/easyorder_logo" />
+        android:src="@drawable/easy_order_logo_2" />
 
 </RelativeLayout>

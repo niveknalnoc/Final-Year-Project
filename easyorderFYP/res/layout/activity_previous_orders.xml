@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/easyorder_logo" />
+        android:src="@drawable/easy_order_logo_2" />
 
     <TextView
         android:id="@+id/tv"
