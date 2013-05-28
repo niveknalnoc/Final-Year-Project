@@ -9,7 +9,7 @@
     <string name="menu_settings">Settings</string>
 
     <!-- GCM -->
-    <string name="error_config">Please set the %1$s constant and recompile the app</string>
+    <!-- <string name="error_config">Please set the %1$s constant and recompile the app</string>
     <string name="already_registered">Device is already registered on server</string>
     <string name="gcm_registered">From GCM: device successfully registered!</string>
     <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
@@ -25,7 +25,7 @@
     <string name="options_register">Register</string>
     <string name="options_unregister">Unregister</string>
     <string name="options_clear">Clear</string>
-    <string name="options_exit">Exit</string>
+    <string name="options_exit">Exit</string> -->
     <string name="eat_in">Eat In</string>
     <string name="take_away">Take Away</string>
 

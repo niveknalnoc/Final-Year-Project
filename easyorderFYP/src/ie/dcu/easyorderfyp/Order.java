@@ -3,7 +3,7 @@ package ie.dcu.easyorderfyp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Order implements Parcelable{
+public class Order implements Parcelable {
 
 	int table_num;
 	String item_id;
@@ -11,7 +11,7 @@ public class Order implements Parcelable{
 	int item_quantity;
 	double item_price;
 	String date;
-	
+
 	public Order(int a, String b, String c, int d, double e, String f) {
 		table_num = a;
 		item_id = b;
@@ -20,56 +20,56 @@ public class Order implements Parcelable{
 		item_price = e;
 		date = f;
 	}
-	
-	Order()
-	{}
-	
+
+	Order() {
+	}
+
 	public String getDate() {
 		return date;
 	}
-	
+
 	public void setDate(String date) {
-		 this.date = date;
+		this.date = date;
 	}
-	
+
 	public String getItemName() {
 		return item_name;
 	}
-	
+
 	public void setItemName(String item_name) {
-		 this.item_name = item_name;
+		this.item_name = item_name;
 	}
-	
+
 	public String getItemId() {
 		return item_id;
 	}
-	
+
 	public void setId(String id) {
-		 this.item_id = id;
+		this.item_id = id;
 	}
-	
+
 	public int getQuantity() {
 		return item_quantity;
 	}
-	
+
 	public void setQuantity(int quantity) {
-		 this.item_quantity = quantity;
+		this.item_quantity = quantity;
 	}
-	
+
 	public double getPrice() {
 		return item_price;
 	}
-	
+
 	public void setPrice(double price) {
-		 this.item_price = price;
+		this.item_price = price;
 	}
-	
+
 	public int getTableNum() {
 		return table_num;
 	}
 
 	public void setTableNum(int table_num) {
-		 this.table_num = table_num;
+		this.table_num = table_num;
 	}
 
 	@Override
@@ -77,16 +77,16 @@ public class Order implements Parcelable{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	private Order(Parcel in) {
-        // This order must match the order in writeToParcel()
+		// This order must match the order in writeToParcel()
 		table_num = in.readInt();
-        item_id = in.readString();
-        item_name = in.readString();
-        item_quantity = in.readInt();
-        item_price = in.readDouble();
-        // Continue doing this for the rest of your member data
-    }
+		item_id = in.readString();
+		item_name = in.readString();
+		item_quantity = in.readInt();
+		item_price = in.readDouble();
+		// Continue doing this for the rest of your member data
+	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
@@ -98,37 +98,33 @@ public class Order implements Parcelable{
 		dest.writeDouble(item_price);
 		dest.writeString(date);
 	}
-	
-	public static final Parcelable.Creator<Order> CREATOR
-    = new Parcelable.Creator<Order>() 
-   {
-         public Order createFromParcel(Parcel in) 
-         {
-             return new Order(in);
-         }
 
-         public Order[] newArray (int size) 
-         {
-             return new Order[size];
-         }
-    };
-    
-    @Override
-    public boolean equals(Object o) {
-		Order m = (Order)o;
-		
-		if(!m.item_name.equals(item_name)) {
+	public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
+		public Order createFromParcel(Parcel in) {
+			return new Order(in);
+		}
+
+		public Order[] newArray(int size) {
+			return new Order[size];
+		}
+	};
+
+	@Override
+	public boolean equals(Object o) {
+		Order m = (Order) o;
+
+		if (!m.item_name.equals(item_name)) {
 			return false;
 		}
-		
-		if(!m.date.equals(date)) {
+
+		if (!m.date.equals(date)) {
 			return false;
 		}
-		
-		if(!m.item_id.equals(item_id)) {
+
+		if (!m.item_id.equals(item_id)) {
 			return false;
 		}
 		return true;
 	}
-	
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true" >
 
@@ -30,6 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/logo"
         android:layout_margin="10dp"
+        android:layout_toRightOf="@+id/txtTableNumber"
         android:text="@string/submit_order" />
 
     <LinearLayout
@@ -61,15 +62,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/logo"
-        android:layout_below="@+id/txtTableNumber"
-        android:text="€ Price"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
         android:id="@+id/item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,5 +77,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/easy_order_logo_2" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignRight="@+id/btnSubmit"
+        android:text="€ Price"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
